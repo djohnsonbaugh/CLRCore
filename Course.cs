@@ -9,11 +9,12 @@ namespace CLRCore
     public class Course
     {
         public string Name { get; private set; }
-        public string Abbreviation { get; private set; }
+        public string Abbreviation { get; set; }
         public SortedList<int, Section> Sections;
-        public int MinAge {get; private set;}
-        public int MaxAge { get; private set; }
+        public int MinAge {get; set;}
+        public int MaxAge { get; set; }
         public SortedSet<Course> Prerequisites;
+        public string Description { get; set; }
 
         public Course(string name, string abbreviation)
         {
@@ -32,6 +33,5 @@ namespace CLRCore
         {
             foreach (Section s in Sections.Values) s.AddInventory(number);
         }
-
     }
 }
