@@ -28,6 +28,9 @@ namespace CLRCore
         {
             Inventory += number;
         }
-
+        public void SetInventory(int number)
+        {
+            Inventory = number;
+        }
     }
 }
