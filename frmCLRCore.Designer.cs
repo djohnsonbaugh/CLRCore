@@ -36,7 +36,16 @@
             this.tpMembers = new System.Windows.Forms.TabPage();
             this.tpCourses = new System.Windows.Forms.TabPage();
             this.gbxCourseDescription = new System.Windows.Forms.GroupBox();
+            this.cmdAddInventory = new System.Windows.Forms.Button();
             this.gbxSections = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.tbxInventory = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tbxSectionAbbr = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbxSectionName = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.cmdMoveUp = new System.Windows.Forms.Button();
             this.cmdRemove = new System.Windows.Forms.Button();
             this.cmdAdd = new System.Windows.Forms.Button();
@@ -57,18 +66,9 @@
             this.tbxName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.gbxInventory = new System.Windows.Forms.GroupBox();
-            this.dgvCourses = new System.Windows.Forms.DataGridView();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tbxSectionName = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tbxSectionAbbr = new System.Windows.Forms.TextBox();
-            this.tbxInventory = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cmdAddInventory = new System.Windows.Forms.Button();
-            this.cmdNewCourse = new System.Windows.Forms.Button();
             this.cbxShowDeprecated = new System.Windows.Forms.CheckBox();
+            this.cmdNewCourse = new System.Windows.Forms.Button();
+            this.dgvCourses = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
             this.tcData.SuspendLayout();
             this.tpCourses.SuspendLayout();
@@ -126,7 +126,7 @@
             this.tpMembers.Location = new System.Drawing.Point(4, 22);
             this.tpMembers.Name = "tpMembers";
             this.tpMembers.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMembers.Size = new System.Drawing.Size(822, 472);
+            this.tpMembers.Size = new System.Drawing.Size(822, 495);
             this.tpMembers.TabIndex = 0;
             this.tpMembers.Text = "Members";
             this.tpMembers.UseVisualStyleBackColor = true;
@@ -168,6 +168,15 @@
             this.gbxCourseDescription.TabStop = false;
             this.gbxCourseDescription.Text = "Selected Course Description";
             // 
+            // cmdAddInventory
+            // 
+            this.cmdAddInventory.Location = new System.Drawing.Point(409, 209);
+            this.cmdAddInventory.Name = "cmdAddInventory";
+            this.cmdAddInventory.Size = new System.Drawing.Size(90, 23);
+            this.cmdAddInventory.TabIndex = 15;
+            this.cmdAddInventory.Text = "Add Inventory";
+            this.cmdAddInventory.UseVisualStyleBackColor = true;
+            // 
             // gbxSections
             // 
             this.gbxSections.Controls.Add(this.label10);
@@ -189,6 +198,71 @@
             this.gbxSections.TabIndex = 14;
             this.gbxSections.TabStop = false;
             this.gbxSections.Text = "Course Sections";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(275, 108);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(100, 13);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Inventory Locations";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(278, 128);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(226, 110);
+            this.richTextBox1.TabIndex = 15;
+            this.richTextBox1.Text = "";
+            // 
+            // tbxInventory
+            // 
+            this.tbxInventory.Location = new System.Drawing.Point(385, 76);
+            this.tbxInventory.Name = "tbxInventory";
+            this.tbxInventory.Size = new System.Drawing.Size(48, 20);
+            this.tbxInventory.TabIndex = 18;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(382, 60);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(51, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Inventory";
+            // 
+            // tbxSectionAbbr
+            // 
+            this.tbxSectionAbbr.Location = new System.Drawing.Point(278, 76);
+            this.tbxSectionAbbr.Name = "tbxSectionAbbr";
+            this.tbxSectionAbbr.Size = new System.Drawing.Size(92, 20);
+            this.tbxSectionAbbr.TabIndex = 16;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(275, 60);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Abbreviation";
+            // 
+            // tbxSectionName
+            // 
+            this.tbxSectionName.Location = new System.Drawing.Point(278, 37);
+            this.tbxSectionName.Name = "tbxSectionName";
+            this.tbxSectionName.Size = new System.Drawing.Size(226, 20);
+            this.tbxSectionName.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(275, 21);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Name";
             // 
             // cmdMoveUp
             // 
@@ -367,101 +441,6 @@
             this.gbxInventory.TabStop = false;
             this.gbxInventory.Text = "Course Inventory";
             // 
-            // dgvCourses
-            // 
-            this.dgvCourses.AllowUserToAddRows = false;
-            this.dgvCourses.AllowUserToDeleteRows = false;
-            this.dgvCourses.AllowUserToOrderColumns = true;
-            this.dgvCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCourses.Location = new System.Drawing.Point(6, 13);
-            this.dgvCourses.Name = "dgvCourses";
-            this.dgvCourses.ReadOnly = true;
-            this.dgvCourses.Size = new System.Drawing.Size(270, 443);
-            this.dgvCourses.TabIndex = 0;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(275, 21);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "Name";
-            // 
-            // tbxSectionName
-            // 
-            this.tbxSectionName.Location = new System.Drawing.Point(278, 37);
-            this.tbxSectionName.Name = "tbxSectionName";
-            this.tbxSectionName.Size = new System.Drawing.Size(226, 20);
-            this.tbxSectionName.TabIndex = 15;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(275, 60);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 13);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Abbreviation";
-            // 
-            // tbxSectionAbbr
-            // 
-            this.tbxSectionAbbr.Location = new System.Drawing.Point(278, 76);
-            this.tbxSectionAbbr.Name = "tbxSectionAbbr";
-            this.tbxSectionAbbr.Size = new System.Drawing.Size(92, 20);
-            this.tbxSectionAbbr.TabIndex = 16;
-            // 
-            // tbxInventory
-            // 
-            this.tbxInventory.Location = new System.Drawing.Point(385, 76);
-            this.tbxInventory.Name = "tbxInventory";
-            this.tbxInventory.Size = new System.Drawing.Size(48, 20);
-            this.tbxInventory.TabIndex = 18;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(382, 60);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(51, 13);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Inventory";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(278, 128);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(226, 110);
-            this.richTextBox1.TabIndex = 15;
-            this.richTextBox1.Text = "";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(275, 108);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(100, 13);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "Inventory Locations";
-            // 
-            // cmdAddInventory
-            // 
-            this.cmdAddInventory.Location = new System.Drawing.Point(409, 209);
-            this.cmdAddInventory.Name = "cmdAddInventory";
-            this.cmdAddInventory.Size = new System.Drawing.Size(90, 23);
-            this.cmdAddInventory.TabIndex = 15;
-            this.cmdAddInventory.Text = "Add Inventory";
-            this.cmdAddInventory.UseVisualStyleBackColor = true;
-            // 
-            // cmdNewCourse
-            // 
-            this.cmdNewCourse.Location = new System.Drawing.Point(6, 460);
-            this.cmdNewCourse.Name = "cmdNewCourse";
-            this.cmdNewCourse.Size = new System.Drawing.Size(75, 23);
-            this.cmdNewCourse.TabIndex = 1;
-            this.cmdNewCourse.Text = "Add Course";
-            this.cmdNewCourse.UseVisualStyleBackColor = true;
-            // 
             // cbxShowDeprecated
             // 
             this.cbxShowDeprecated.AutoSize = true;
@@ -471,6 +450,29 @@
             this.cbxShowDeprecated.TabIndex = 2;
             this.cbxShowDeprecated.Text = "Show Deprecated Courses";
             this.cbxShowDeprecated.UseVisualStyleBackColor = true;
+            // 
+            // cmdNewCourse
+            // 
+            this.cmdNewCourse.Location = new System.Drawing.Point(6, 460);
+            this.cmdNewCourse.Name = "cmdNewCourse";
+            this.cmdNewCourse.Size = new System.Drawing.Size(75, 23);
+            this.cmdNewCourse.TabIndex = 1;
+            this.cmdNewCourse.Text = "Add Course";
+            this.cmdNewCourse.UseVisualStyleBackColor = true;
+            this.cmdNewCourse.Click += new System.EventHandler(this.cmdNewCourse_Click);
+            // 
+            // dgvCourses
+            // 
+            this.dgvCourses.AllowUserToOrderColumns = true;
+            this.dgvCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCourses.Location = new System.Drawing.Point(6, 13);
+            this.dgvCourses.MultiSelect = false;
+            this.dgvCourses.Name = "dgvCourses";
+            this.dgvCourses.ReadOnly = true;
+            this.dgvCourses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCourses.Size = new System.Drawing.Size(270, 443);
+            this.dgvCourses.TabIndex = 0;
+            this.dgvCourses.SelectionChanged += new System.EventHandler(this.dgvCourses_SelectionChanged);
             // 
             // frmCLRCore
             // 
