@@ -11,13 +11,6 @@ namespace CLRCore
     {
         public Dictionary<int, Course> Courses { get; }
         public BindingList<Course> BLCourses { get; }
-        public event EventHandler CourseAdded;
-
-        public virtual void OnCourseAdded(EventArgs e)
-        {
-            if (CourseAdded != null) CourseAdded(this, e);
-        }
-
 
         public CLRCoreData()
         {
@@ -32,25 +25,18 @@ namespace CLRCore
             return nextid;
 
         }
-
+        public bool CourseNameExists(string name)
+        {
+            foreach (Course c in BLCourses) if (c.Name == name) return true;
+            return false;
+        }
         public Course CreateNewCourse()
         {
             int newid = GetNextCourseID();
             Courses.Add(newid, new Course());
             BLCourses.Add(Courses[newid]);
-            OnCourseAdded(new CourseAddedEventArgs(newid));
             return Courses[newid];
         }
     }
-    public class CourseAddedEventArgs : EventArgs
-    {
-        public int ID { get; private set; }
 
-        // Constructor. 
-        public CourseAddedEventArgs(int id)
-        {
-            ID = id;
-        }
-
-     }
 }

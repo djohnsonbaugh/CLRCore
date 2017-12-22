@@ -8,7 +8,7 @@ namespace CLRCore
 {
     public class Course
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public string Abbreviation { get; set; }
         public SortedList<int, Section> Sections;
         public int MinAge {get; set;}
@@ -23,6 +23,7 @@ namespace CLRCore
         {
             Sections = new SortedList<int, CLRCore.Section>();
             Prerequisites = new SortedSet<CLRCore.Course>();
+            Name = "";
         }
         public Course(string name, string abbreviation) : this()
         {

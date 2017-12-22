@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miFileImportData = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +70,8 @@
             this.cbxShowDeprecated = new System.Windows.Forms.CheckBox();
             this.cmdNewCourse = new System.Windows.Forms.Button();
             this.dgvCourses = new System.Windows.Forms.DataGridView();
+            this.cmdSaveCourse = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.menuStrip1.SuspendLayout();
             this.tcData.SuspendLayout();
             this.tpCourses.SuspendLayout();
@@ -77,6 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.gbxInventory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourses)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -145,6 +149,7 @@
             // 
             // gbxCourseDescription
             // 
+            this.gbxCourseDescription.Controls.Add(this.cmdSaveCourse);
             this.gbxCourseDescription.Controls.Add(this.cmdAddInventory);
             this.gbxCourseDescription.Controls.Add(this.gbxSections);
             this.gbxCourseDescription.Controls.Add(this.tbxLink);
@@ -419,6 +424,9 @@
             this.tbxName.Name = "tbxName";
             this.tbxName.Size = new System.Drawing.Size(421, 20);
             this.tbxName.TabIndex = 0;
+            this.tbxName.TextChanged += new System.EventHandler(this.tbxName_TextChanged);
+            this.tbxName.Validating += new System.ComponentModel.CancelEventHandler(this.tbxName_Validating);
+            this.tbxName.Validated += new System.EventHandler(this.tbxName_Validated);
             // 
             // label1
             // 
@@ -474,6 +482,20 @@
             this.dgvCourses.TabIndex = 0;
             this.dgvCourses.SelectionChanged += new System.EventHandler(this.dgvCourses_SelectionChanged);
             // 
+            // cmdSaveCourse
+            // 
+            this.cmdSaveCourse.Location = new System.Drawing.Point(313, 209);
+            this.cmdSaveCourse.Name = "cmdSaveCourse";
+            this.cmdSaveCourse.Size = new System.Drawing.Size(90, 23);
+            this.cmdSaveCourse.TabIndex = 16;
+            this.cmdSaveCourse.Text = "Save Changes";
+            this.cmdSaveCourse.UseVisualStyleBackColor = true;
+            this.cmdSaveCourse.Click += new System.EventHandler(this.cmdSaveCourse_Click);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // frmCLRCore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -496,6 +518,7 @@
             this.gbxInventory.ResumeLayout(false);
             this.gbxInventory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourses)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -544,6 +567,8 @@
         private System.Windows.Forms.Button cmdAddInventory;
         private System.Windows.Forms.CheckBox cbxShowDeprecated;
         private System.Windows.Forms.Button cmdNewCourse;
+        private System.Windows.Forms.Button cmdSaveCourse;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 
