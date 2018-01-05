@@ -8,15 +8,18 @@ namespace CLRCore
 {
     public class Section
     {
-        public string Name { get; private set; }
-        public string Abbreviation { get; private set; }
-        public int Inventory { get; private set; }
-        public string InventoryLocations { get; private set; }
+        public string Name { get; set; }
+        public string Abbreviation { get; set; }
+        public int Inventory { get; set; }
+        public string InventoryLocations { get; set; }
+        public int ID { get; set; }
 
-        public Section(string name, string abbreviation)
+        public Section(int id, string name, string abbreviation)
         {
+            ID = id;
             Name = name;
             Abbreviation = abbreviation;
+            Inventory = 0;
         }
 
         public void DecrementInventory()
@@ -31,6 +34,13 @@ namespace CLRCore
         public void SetInventory(int number)
         {
             Inventory = number;
+        }
+        public Section Copy()
+        {
+            Section s = new CLRCore.Section(ID, Name, Abbreviation);
+            s.Inventory = Inventory;
+            s.InventoryLocations = InventoryLocations;
+            return s;
         }
     }
 }

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CLRCoreData.cs" />
+    <Compile Include="CLRFileOps.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="frmCLRCore.cs">
       <SubType>Form</SubType>

@@ -31,16 +31,20 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.miFileImportData = new System.Windows.Forms.ToolStripMenuItem();
-            this.miFileExportData = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tcData = new System.Windows.Forms.TabControl();
             this.tpMembers = new System.Windows.Forms.TabPage();
             this.tpCourses = new System.Windows.Forms.TabPage();
             this.gbxCourseDescription = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cbxPrereq = new System.Windows.Forms.ComboBox();
+            this.cmdSaveCourse = new System.Windows.Forms.Button();
             this.cmdAddInventory = new System.Windows.Forms.Button();
             this.gbxSections = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.tbxInvLocations = new System.Windows.Forms.RichTextBox();
             this.tbxInventory = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tbxSectionAbbr = new System.Windows.Forms.TextBox();
@@ -51,7 +55,7 @@
             this.cmdRemove = new System.Windows.Forms.Button();
             this.cmdAdd = new System.Windows.Forms.Button();
             this.cmdMoveDown = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvSections = new System.Windows.Forms.DataGridView();
             this.tbxLink = new System.Windows.Forms.TextBox();
             this.llblLink = new System.Windows.Forms.LinkLabel();
             this.label6 = new System.Windows.Forms.Label();
@@ -70,14 +74,15 @@
             this.cbxShowDeprecated = new System.Windows.Forms.CheckBox();
             this.cmdNewCourse = new System.Windows.Forms.Button();
             this.dgvCourses = new System.Windows.Forms.DataGridView();
-            this.cmdSaveCourse = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.tcData.SuspendLayout();
             this.tpCourses.SuspendLayout();
             this.gbxCourseDescription.SuspendLayout();
             this.gbxSections.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSections)).BeginInit();
             this.gbxInventory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourses)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -96,23 +101,33 @@
             // miFile
             // 
             this.miFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miFileImportData,
-            this.miFileExportData});
+            this.miOpen,
+            this.miSave,
+            this.miSaveAs});
             this.miFile.Name = "miFile";
             this.miFile.Size = new System.Drawing.Size(37, 20);
             this.miFile.Text = "File";
             // 
-            // miFileImportData
+            // miOpen
             // 
-            this.miFileImportData.Name = "miFileImportData";
-            this.miFileImportData.Size = new System.Drawing.Size(146, 22);
-            this.miFileImportData.Text = "Import Data...";
+            this.miOpen.Name = "miOpen";
+            this.miOpen.Size = new System.Drawing.Size(123, 22);
+            this.miOpen.Text = "Open...";
+            this.miOpen.Click += new System.EventHandler(this.miOpen_Click);
             // 
-            // miFileExportData
+            // miSave
             // 
-            this.miFileExportData.Name = "miFileExportData";
-            this.miFileExportData.Size = new System.Drawing.Size(146, 22);
-            this.miFileExportData.Text = "Export Data...";
+            this.miSave.Name = "miSave";
+            this.miSave.Size = new System.Drawing.Size(123, 22);
+            this.miSave.Text = "Save";
+            this.miSave.Click += new System.EventHandler(this.miSave_Click);
+            // 
+            // miSaveAs
+            // 
+            this.miSaveAs.Name = "miSaveAs";
+            this.miSaveAs.Size = new System.Drawing.Size(123, 22);
+            this.miSaveAs.Text = "Save As...";
+            this.miSaveAs.Click += new System.EventHandler(this.miSaveAs_Click);
             // 
             // tcData
             // 
@@ -149,6 +164,8 @@
             // 
             // gbxCourseDescription
             // 
+            this.gbxCourseDescription.Controls.Add(this.label11);
+            this.gbxCourseDescription.Controls.Add(this.cbxPrereq);
             this.gbxCourseDescription.Controls.Add(this.cmdSaveCourse);
             this.gbxCourseDescription.Controls.Add(this.cmdAddInventory);
             this.gbxCourseDescription.Controls.Add(this.gbxSections);
@@ -166,12 +183,40 @@
             this.gbxCourseDescription.Controls.Add(this.label2);
             this.gbxCourseDescription.Controls.Add(this.tbxName);
             this.gbxCourseDescription.Controls.Add(this.label1);
+            this.gbxCourseDescription.Enabled = false;
             this.gbxCourseDescription.Location = new System.Drawing.Point(296, 6);
             this.gbxCourseDescription.Name = "gbxCourseDescription";
             this.gbxCourseDescription.Size = new System.Drawing.Size(523, 483);
             this.gbxCourseDescription.TabIndex = 1;
             this.gbxCourseDescription.TabStop = false;
             this.gbxCourseDescription.Text = "Selected Course Description";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(10, 214);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(38, 13);
+            this.label11.TabIndex = 18;
+            this.label11.Text = "Prereq";
+            // 
+            // cbxPrereq
+            // 
+            this.cbxPrereq.FormattingEnabled = true;
+            this.cbxPrereq.Location = new System.Drawing.Point(59, 211);
+            this.cbxPrereq.Name = "cbxPrereq";
+            this.cbxPrereq.Size = new System.Drawing.Size(246, 21);
+            this.cbxPrereq.TabIndex = 7;
+            // 
+            // cmdSaveCourse
+            // 
+            this.cmdSaveCourse.Location = new System.Drawing.Point(313, 209);
+            this.cmdSaveCourse.Name = "cmdSaveCourse";
+            this.cmdSaveCourse.Size = new System.Drawing.Size(90, 23);
+            this.cmdSaveCourse.TabIndex = 8;
+            this.cmdSaveCourse.Text = "Save Changes";
+            this.cmdSaveCourse.UseVisualStyleBackColor = true;
+            this.cmdSaveCourse.Click += new System.EventHandler(this.cmdSaveCourse_Click);
             // 
             // cmdAddInventory
             // 
@@ -185,7 +230,7 @@
             // gbxSections
             // 
             this.gbxSections.Controls.Add(this.label10);
-            this.gbxSections.Controls.Add(this.richTextBox1);
+            this.gbxSections.Controls.Add(this.tbxInvLocations);
             this.gbxSections.Controls.Add(this.tbxInventory);
             this.gbxSections.Controls.Add(this.label9);
             this.gbxSections.Controls.Add(this.tbxSectionAbbr);
@@ -196,7 +241,7 @@
             this.gbxSections.Controls.Add(this.cmdRemove);
             this.gbxSections.Controls.Add(this.cmdAdd);
             this.gbxSections.Controls.Add(this.cmdMoveDown);
-            this.gbxSections.Controls.Add(this.dataGridView1);
+            this.gbxSections.Controls.Add(this.dgvSections);
             this.gbxSections.Location = new System.Drawing.Point(7, 233);
             this.gbxSections.Name = "gbxSections";
             this.gbxSections.Size = new System.Drawing.Size(510, 244);
@@ -213,20 +258,26 @@
             this.label10.TabIndex = 19;
             this.label10.Text = "Inventory Locations";
             // 
-            // richTextBox1
+            // tbxInvLocations
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(278, 128);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(226, 110);
-            this.richTextBox1.TabIndex = 15;
-            this.richTextBox1.Text = "";
+            this.tbxInvLocations.Enabled = false;
+            this.tbxInvLocations.Location = new System.Drawing.Point(282, 124);
+            this.tbxInvLocations.Name = "tbxInvLocations";
+            this.tbxInvLocations.Size = new System.Drawing.Size(214, 110);
+            this.tbxInvLocations.TabIndex = 13;
+            this.tbxInvLocations.Text = "";
+            this.tbxInvLocations.Validating += new System.ComponentModel.CancelEventHandler(this.tbxInvLocations_Validating);
+            this.tbxInvLocations.Validated += new System.EventHandler(this.SectionDetail_Validated);
             // 
             // tbxInventory
             // 
+            this.tbxInventory.Enabled = false;
             this.tbxInventory.Location = new System.Drawing.Point(385, 76);
             this.tbxInventory.Name = "tbxInventory";
             this.tbxInventory.Size = new System.Drawing.Size(48, 20);
-            this.tbxInventory.TabIndex = 18;
+            this.tbxInventory.TabIndex = 12;
+            this.tbxInventory.Validating += new System.ComponentModel.CancelEventHandler(this.tbxInventory_Validating);
+            this.tbxInventory.Validated += new System.EventHandler(this.SectionDetail_Validated);
             // 
             // label9
             // 
@@ -239,10 +290,13 @@
             // 
             // tbxSectionAbbr
             // 
+            this.tbxSectionAbbr.Enabled = false;
             this.tbxSectionAbbr.Location = new System.Drawing.Point(278, 76);
             this.tbxSectionAbbr.Name = "tbxSectionAbbr";
             this.tbxSectionAbbr.Size = new System.Drawing.Size(92, 20);
-            this.tbxSectionAbbr.TabIndex = 16;
+            this.tbxSectionAbbr.TabIndex = 11;
+            this.tbxSectionAbbr.Validating += new System.ComponentModel.CancelEventHandler(this.tbxSectionAbbr_Validating);
+            this.tbxSectionAbbr.Validated += new System.EventHandler(this.SectionDetail_Validated);
             // 
             // label8
             // 
@@ -255,10 +309,13 @@
             // 
             // tbxSectionName
             // 
+            this.tbxSectionName.Enabled = false;
             this.tbxSectionName.Location = new System.Drawing.Point(278, 37);
             this.tbxSectionName.Name = "tbxSectionName";
             this.tbxSectionName.Size = new System.Drawing.Size(226, 20);
-            this.tbxSectionName.TabIndex = 15;
+            this.tbxSectionName.TabIndex = 10;
+            this.tbxSectionName.Validating += new System.ComponentModel.CancelEventHandler(this.tbxSectionName_Validating);
+            this.tbxSectionName.Validated += new System.EventHandler(this.SectionDetail_Validated);
             // 
             // label7
             // 
@@ -277,6 +334,7 @@
             this.cmdMoveUp.TabIndex = 5;
             this.cmdMoveUp.Text = "↑";
             this.cmdMoveUp.UseVisualStyleBackColor = true;
+            this.cmdMoveUp.Click += new System.EventHandler(this.cmdMoveUp_Click);
             // 
             // cmdRemove
             // 
@@ -286,15 +344,17 @@
             this.cmdRemove.TabIndex = 4;
             this.cmdRemove.Text = "-";
             this.cmdRemove.UseVisualStyleBackColor = true;
+            this.cmdRemove.Click += new System.EventHandler(this.cmdRemove_Click);
             // 
             // cmdAdd
             // 
             this.cmdAdd.Location = new System.Drawing.Point(237, 79);
             this.cmdAdd.Name = "cmdAdd";
             this.cmdAdd.Size = new System.Drawing.Size(23, 23);
-            this.cmdAdd.TabIndex = 3;
+            this.cmdAdd.TabIndex = 9;
             this.cmdAdd.Text = "+";
             this.cmdAdd.UseVisualStyleBackColor = true;
+            this.cmdAdd.Click += new System.EventHandler(this.cmdNewSection_Click);
             // 
             // cmdMoveDown
             // 
@@ -304,18 +364,21 @@
             this.cmdMoveDown.TabIndex = 2;
             this.cmdMoveDown.Text = "↓";
             this.cmdMoveDown.UseVisualStyleBackColor = true;
+            this.cmdMoveDown.Click += new System.EventHandler(this.cmdMoveDown_Click);
             // 
-            // dataGridView1
+            // dgvSections
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(225, 219);
-            this.dataGridView1.TabIndex = 1;
+            this.dgvSections.AllowUserToAddRows = false;
+            this.dgvSections.AllowUserToDeleteRows = false;
+            this.dgvSections.AllowUserToOrderColumns = true;
+            this.dgvSections.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSections.Location = new System.Drawing.Point(6, 19);
+            this.dgvSections.Name = "dgvSections";
+            this.dgvSections.ReadOnly = true;
+            this.dgvSections.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvSections.Size = new System.Drawing.Size(225, 219);
+            this.dgvSections.TabIndex = 1;
+            this.dgvSections.SelectionChanged += new System.EventHandler(this.dgvSections_SelectionChanged);
             // 
             // tbxLink
             // 
@@ -376,6 +439,8 @@
             this.tbxMaxAge.Name = "tbxMaxAge";
             this.tbxMaxAge.Size = new System.Drawing.Size(43, 20);
             this.tbxMaxAge.TabIndex = 3;
+            this.tbxMaxAge.Validating += new System.ComponentModel.CancelEventHandler(this.tbxMaxAge_Validating);
+            this.tbxMaxAge.Validated += new System.EventHandler(this.CourseDetail_Validated);
             // 
             // label4
             // 
@@ -392,6 +457,8 @@
             this.tbxMinAge.Name = "tbxMinAge";
             this.tbxMinAge.Size = new System.Drawing.Size(43, 20);
             this.tbxMinAge.TabIndex = 2;
+            this.tbxMinAge.Validating += new System.ComponentModel.CancelEventHandler(this.tbxMinAge_Validating);
+            this.tbxMinAge.Validated += new System.EventHandler(this.CourseDetail_Validated);
             // 
             // label3
             // 
@@ -408,6 +475,8 @@
             this.tbxAbbr.Name = "tbxAbbr";
             this.tbxAbbr.Size = new System.Drawing.Size(97, 20);
             this.tbxAbbr.TabIndex = 1;
+            this.tbxAbbr.Validating += new System.ComponentModel.CancelEventHandler(this.tbxAbbr_Validating);
+            this.tbxAbbr.Validated += new System.EventHandler(this.CourseDetail_Validated);
             // 
             // label2
             // 
@@ -426,7 +495,7 @@
             this.tbxName.TabIndex = 0;
             this.tbxName.TextChanged += new System.EventHandler(this.tbxName_TextChanged);
             this.tbxName.Validating += new System.ComponentModel.CancelEventHandler(this.tbxName_Validating);
-            this.tbxName.Validated += new System.EventHandler(this.tbxName_Validated);
+            this.tbxName.Validated += new System.EventHandler(this.CourseDetail_Validated);
             // 
             // label1
             // 
@@ -471,6 +540,8 @@
             // 
             // dgvCourses
             // 
+            this.dgvCourses.AllowUserToAddRows = false;
+            this.dgvCourses.AllowUserToDeleteRows = false;
             this.dgvCourses.AllowUserToOrderColumns = true;
             this.dgvCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCourses.Location = new System.Drawing.Point(6, 13);
@@ -482,19 +553,20 @@
             this.dgvCourses.TabIndex = 0;
             this.dgvCourses.SelectionChanged += new System.EventHandler(this.dgvCourses_SelectionChanged);
             // 
-            // cmdSaveCourse
-            // 
-            this.cmdSaveCourse.Location = new System.Drawing.Point(313, 209);
-            this.cmdSaveCourse.Name = "cmdSaveCourse";
-            this.cmdSaveCourse.Size = new System.Drawing.Size(90, 23);
-            this.cmdSaveCourse.TabIndex = 16;
-            this.cmdSaveCourse.Text = "Save Changes";
-            this.cmdSaveCourse.UseVisualStyleBackColor = true;
-            this.cmdSaveCourse.Click += new System.EventHandler(this.cmdSaveCourse_Click);
-            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "json";
+            this.saveFileDialog1.FileName = "*.json";
+            this.saveFileDialog1.Filter = "JSON|*.json|All file|*.*";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "*.json";
+            this.openFileDialog1.Filter = "JSON|.json|All Files|*.*";
             // 
             // frmCLRCore
             // 
@@ -514,7 +586,7 @@
             this.gbxCourseDescription.PerformLayout();
             this.gbxSections.ResumeLayout(false);
             this.gbxSections.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSections)).EndInit();
             this.gbxInventory.ResumeLayout(false);
             this.gbxInventory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourses)).EndInit();
@@ -528,8 +600,8 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem miFile;
-        private System.Windows.Forms.ToolStripMenuItem miFileImportData;
-        private System.Windows.Forms.ToolStripMenuItem miFileExportData;
+        private System.Windows.Forms.ToolStripMenuItem miOpen;
+        private System.Windows.Forms.ToolStripMenuItem miSave;
         private System.Windows.Forms.TabControl tcData;
         private System.Windows.Forms.TabPage tpMembers;
         private System.Windows.Forms.TabPage tpCourses;
@@ -552,7 +624,7 @@
         private System.Windows.Forms.RichTextBox rbxDescription;
         private System.Windows.Forms.GroupBox gbxSections;
         private System.Windows.Forms.Button cmdMoveDown;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvSections;
         private System.Windows.Forms.Button cmdMoveUp;
         private System.Windows.Forms.Button cmdRemove;
         private System.Windows.Forms.Button cmdAdd;
@@ -561,7 +633,7 @@
         private System.Windows.Forms.TextBox tbxSectionName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox tbxInvLocations;
         private System.Windows.Forms.TextBox tbxInventory;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button cmdAddInventory;
@@ -569,6 +641,11 @@
         private System.Windows.Forms.Button cmdNewCourse;
         private System.Windows.Forms.Button cmdSaveCourse;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cbxPrereq;
+        private System.Windows.Forms.ToolStripMenuItem miSaveAs;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

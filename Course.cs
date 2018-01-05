@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace CLRCore
         public int MinAge {get; set;}
         public int MinInventory {  get { return GetMinimumInventory(); } }
         public int MaxAge { get; set; }
-        public SortedSet<Course> Prerequisites;
+        public Course Prerequisites;
         public string Description { get; set; }
         public string Link { get; set; }
         public bool Deprecated { get; set; }
@@ -22,8 +23,9 @@ namespace CLRCore
         public Course()
         {
             Sections = new SortedList<int, CLRCore.Section>();
-            Prerequisites = new SortedSet<CLRCore.Course>();
+            Prerequisites = null;
             Name = "";
+            MaxAge = 120;
         }
         public Course(string name, string abbreviation) : this()
         {
@@ -48,6 +50,23 @@ namespace CLRCore
                 if (mininv > s.Inventory)
                     mininv = s.Inventory;
             return mininv; 
+        }
+        public BindingList<Section> CopySections()
+        {
+            BindingList<Section> secs = new BindingList<CLRCore.Section>(); 
+            foreach(KeyValuePair<int, Section> sec in Sections)
+            {
+                secs.Add(sec.Value.Copy());
+            }
+            return secs;
+        }
+        public void  UpdateSections(BindingList<Section> secs)
+        {
+            Sections = new SortedList<int, CLRCore.Section>();
+            foreach(Section s in secs)
+            {
+                Sections.Add(s.ID, s);
+            }
         }
     }
 }
