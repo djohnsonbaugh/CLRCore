@@ -249,7 +249,7 @@ namespace CLRCore
                 errorProvider1.SetError(tbxAbbr, "Unique abbreviation is required.");
                 e.Cancel = true;
             }
-            if (CLRData.CourseAbbrExists(tbxAbbr.Text))
+            if (CLRData.CourseAbbrExists(tbxAbbr.Text) && tbxAbbr.Text != SelectedCourse.Abbreviation)
             {
                 tbxAbbr.Select(0, tbxAbbr.Text.Length);
                 errorProvider1.SetError(tbxAbbr, "Abbreviation provided is not unique.");
