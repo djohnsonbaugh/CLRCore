@@ -29,6 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,12 +51,55 @@
             this.miSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.tcData = new System.Windows.Forms.TabControl();
             this.tpMembers = new System.Windows.Forms.TabPage();
+            this.gbxMemberDetails = new System.Windows.Forms.GroupBox();
+            this.cmdSaveMember = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dgvCompletedSections = new System.Windows.Forms.DataGridView();
+            this.gbxCompletedCourses = new System.Windows.Forms.GroupBox();
+            this.dgvCompletedCourses = new System.Windows.Forms.DataGridView();
+            this.cbxProfOfFaith = new System.Windows.Forms.CheckBox();
+            this.cbxDenomination = new System.Windows.Forms.ComboBox();
+            this.cbxAdult = new System.Windows.Forms.CheckBox();
+            this.cbxChurch = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cbxCountry = new System.Windows.Forms.ComboBox();
+            this.cbxPerish = new System.Windows.Forms.ComboBox();
+            this.cbxCity = new System.Windows.Forms.ComboBox();
+            this.tbxCareOf = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.tbxZipCode = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.tbxStreet = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbxFirstName = new System.Windows.Forms.TextBox();
+            this.tbxLastName = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.tbxMiddleName = new System.Windows.Forms.TextBox();
+            this.tbxSuffix = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.dtpMembershipDate = new System.Windows.Forms.DateTimePicker();
+            this.label17 = new System.Windows.Forms.Label();
+            this.dtpDoB = new System.Windows.Forms.DateTimePicker();
+            this.gbxMembership = new System.Windows.Forms.GroupBox();
+            this.cbxInactive = new System.Windows.Forms.CheckBox();
+            this.cmdAddMember = new System.Windows.Forms.Button();
+            this.dgvMembers = new System.Windows.Forms.DataGridView();
+            this.tbxSearch = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.tpCourses = new System.Windows.Forms.TabPage();
             this.gbxCourseDescription = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbxPrereq = new System.Windows.Forms.ComboBox();
             this.cmdSaveCourse = new System.Windows.Forms.Button();
-            this.cmdAddInventory = new System.Windows.Forms.Button();
             this.gbxSections = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.tbxInvLocations = new System.Windows.Forms.RichTextBox();
@@ -59,7 +117,7 @@
             this.tbxLink = new System.Windows.Forms.TextBox();
             this.llblLink = new System.Windows.Forms.LinkLabel();
             this.label6 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cbxDeprecated = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.rbxDescription = new System.Windows.Forms.RichTextBox();
             this.tbxMaxAge = new System.Windows.Forms.TextBox();
@@ -77,8 +135,19 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.cbxAdultCourse = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.tcData.SuspendLayout();
+            this.tpMembers.SuspendLayout();
+            this.gbxMemberDetails.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompletedSections)).BeginInit();
+            this.gbxCompletedCourses.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompletedCourses)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.gbxMembership.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMembers)).BeginInit();
             this.tpCourses.SuspendLayout();
             this.gbxCourseDescription.SuspendLayout();
             this.gbxSections.SuspendLayout();
@@ -137,18 +206,550 @@
             this.tcData.Location = new System.Drawing.Point(0, 24);
             this.tcData.Name = "tcData";
             this.tcData.SelectedIndex = 0;
-            this.tcData.Size = new System.Drawing.Size(830, 521);
+            this.tcData.Size = new System.Drawing.Size(830, 515);
             this.tcData.TabIndex = 1;
             // 
             // tpMembers
             // 
+            this.tpMembers.Controls.Add(this.gbxMemberDetails);
+            this.tpMembers.Controls.Add(this.gbxMembership);
             this.tpMembers.Location = new System.Drawing.Point(4, 22);
             this.tpMembers.Name = "tpMembers";
             this.tpMembers.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMembers.Size = new System.Drawing.Size(822, 495);
+            this.tpMembers.Size = new System.Drawing.Size(822, 489);
             this.tpMembers.TabIndex = 0;
             this.tpMembers.Text = "Members";
             this.tpMembers.UseVisualStyleBackColor = true;
+            this.tpMembers.Click += new System.EventHandler(this.tpMembers_Click);
+            // 
+            // gbxMemberDetails
+            // 
+            this.gbxMemberDetails.Controls.Add(this.cmdSaveMember);
+            this.gbxMemberDetails.Controls.Add(this.groupBox4);
+            this.gbxMemberDetails.Controls.Add(this.gbxCompletedCourses);
+            this.gbxMemberDetails.Controls.Add(this.cbxProfOfFaith);
+            this.gbxMemberDetails.Controls.Add(this.cbxDenomination);
+            this.gbxMemberDetails.Controls.Add(this.cbxAdult);
+            this.gbxMemberDetails.Controls.Add(this.cbxChurch);
+            this.gbxMemberDetails.Controls.Add(this.label25);
+            this.gbxMemberDetails.Controls.Add(this.groupBox3);
+            this.gbxMemberDetails.Controls.Add(this.label26);
+            this.gbxMemberDetails.Controls.Add(this.groupBox2);
+            this.gbxMemberDetails.Controls.Add(this.label18);
+            this.gbxMemberDetails.Controls.Add(this.dtpMembershipDate);
+            this.gbxMemberDetails.Controls.Add(this.label17);
+            this.gbxMemberDetails.Controls.Add(this.dtpDoB);
+            this.gbxMemberDetails.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbxMemberDetails.Location = new System.Drawing.Point(297, 3);
+            this.gbxMemberDetails.Name = "gbxMemberDetails";
+            this.gbxMemberDetails.Size = new System.Drawing.Size(522, 483);
+            this.gbxMemberDetails.TabIndex = 13;
+            this.gbxMemberDetails.TabStop = false;
+            this.gbxMemberDetails.Text = "Member Details";
+            // 
+            // cmdSaveMember
+            // 
+            this.cmdSaveMember.Location = new System.Drawing.Point(418, 170);
+            this.cmdSaveMember.Name = "cmdSaveMember";
+            this.cmdSaveMember.Size = new System.Drawing.Size(90, 23);
+            this.cmdSaveMember.TabIndex = 15;
+            this.cmdSaveMember.Text = "Save Changes";
+            this.cmdSaveMember.UseVisualStyleBackColor = true;
+            this.cmdSaveMember.Click += new System.EventHandler(this.cmdSaveMember_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.dgvCompletedSections);
+            this.groupBox4.Location = new System.Drawing.Point(255, 198);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(246, 279);
+            this.groupBox4.TabIndex = 28;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Current Course";
+            // 
+            // dgvCompletedSections
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCompletedSections.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCompletedSections.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCompletedSections.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvCompletedSections.Location = new System.Drawing.Point(3, 143);
+            this.dgvCompletedSections.Name = "dgvCompletedSections";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCompletedSections.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCompletedSections.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCompletedSections.Size = new System.Drawing.Size(237, 133);
+            this.dgvCompletedSections.TabIndex = 3;
+            // 
+            // gbxCompletedCourses
+            // 
+            this.gbxCompletedCourses.Controls.Add(this.dgvCompletedCourses);
+            this.gbxCompletedCourses.Location = new System.Drawing.Point(6, 198);
+            this.gbxCompletedCourses.Name = "gbxCompletedCourses";
+            this.gbxCompletedCourses.Size = new System.Drawing.Size(246, 279);
+            this.gbxCompletedCourses.TabIndex = 27;
+            this.gbxCompletedCourses.TabStop = false;
+            this.gbxCompletedCourses.Text = "Completed Courses";
+            // 
+            // dgvCompletedCourses
+            // 
+            this.dgvCompletedCourses.AllowUserToAddRows = false;
+            this.dgvCompletedCourses.AllowUserToResizeRows = false;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCompletedCourses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvCompletedCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCompletedCourses.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvCompletedCourses.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCompletedCourses.Location = new System.Drawing.Point(3, 16);
+            this.dgvCompletedCourses.MultiSelect = false;
+            this.dgvCompletedCourses.Name = "dgvCompletedCourses";
+            this.dgvCompletedCourses.ReadOnly = true;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCompletedCourses.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dgvCompletedCourses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCompletedCourses.Size = new System.Drawing.Size(240, 260);
+            this.dgvCompletedCourses.TabIndex = 3;
+            this.dgvCompletedCourses.TabStop = false;
+            // 
+            // cbxProfOfFaith
+            // 
+            this.cbxProfOfFaith.Location = new System.Drawing.Point(317, 51);
+            this.cbxProfOfFaith.Name = "cbxProfOfFaith";
+            this.cbxProfOfFaith.Size = new System.Drawing.Size(60, 30);
+            this.cbxProfOfFaith.TabIndex = 4;
+            this.cbxProfOfFaith.Text = "Prof of Faith";
+            this.cbxProfOfFaith.UseVisualStyleBackColor = true;
+            this.cbxProfOfFaith.CheckedChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // cbxDenomination
+            // 
+            this.cbxDenomination.FormattingEnabled = true;
+            this.cbxDenomination.Location = new System.Drawing.Point(265, 171);
+            this.cbxDenomination.Name = "cbxDenomination";
+            this.cbxDenomination.Size = new System.Drawing.Size(136, 21);
+            this.cbxDenomination.TabIndex = 14;
+            this.cbxDenomination.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // cbxAdult
+            // 
+            this.cbxAdult.AutoSize = true;
+            this.cbxAdult.Location = new System.Drawing.Point(317, 31);
+            this.cbxAdult.Name = "cbxAdult";
+            this.cbxAdult.Size = new System.Drawing.Size(50, 17);
+            this.cbxAdult.TabIndex = 3;
+            this.cbxAdult.Text = "Adult";
+            this.cbxAdult.UseVisualStyleBackColor = true;
+            this.cbxAdult.CheckedChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // cbxChurch
+            // 
+            this.cbxChurch.FormattingEnabled = true;
+            this.cbxChurch.Location = new System.Drawing.Point(44, 171);
+            this.cbxChurch.Name = "cbxChurch";
+            this.cbxChurch.Size = new System.Drawing.Size(136, 21);
+            this.cbxChurch.TabIndex = 13;
+            this.cbxChurch.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(188, 175);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(72, 13);
+            this.label25.TabIndex = 23;
+            this.label25.Text = "Denomination";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.cbxCountry);
+            this.groupBox3.Controls.Add(this.cbxPerish);
+            this.groupBox3.Controls.Add(this.cbxCity);
+            this.groupBox3.Controls.Add(this.tbxCareOf);
+            this.groupBox3.Controls.Add(this.label23);
+            this.groupBox3.Controls.Add(this.tbxZipCode);
+            this.groupBox3.Controls.Add(this.label24);
+            this.groupBox3.Controls.Add(this.label22);
+            this.groupBox3.Controls.Add(this.label21);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.tbxStreet);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Location = new System.Drawing.Point(6, 88);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(510, 77);
+            this.groupBox3.TabIndex = 13;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Address";
+            // 
+            // cbxCountry
+            // 
+            this.cbxCountry.FormattingEnabled = true;
+            this.cbxCountry.Location = new System.Drawing.Point(226, 44);
+            this.cbxCountry.Name = "cbxCountry";
+            this.cbxCountry.Size = new System.Drawing.Size(136, 21);
+            this.cbxCountry.TabIndex = 10;
+            this.cbxCountry.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // cbxPerish
+            // 
+            this.cbxPerish.FormattingEnabled = true;
+            this.cbxPerish.Location = new System.Drawing.Point(224, 18);
+            this.cbxPerish.Name = "cbxPerish";
+            this.cbxPerish.Size = new System.Drawing.Size(136, 21);
+            this.cbxPerish.TabIndex = 9;
+            this.cbxPerish.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // cbxCity
+            // 
+            this.cbxCity.FormattingEnabled = true;
+            this.cbxCity.Location = new System.Drawing.Point(38, 44);
+            this.cbxCity.Name = "cbxCity";
+            this.cbxCity.Size = new System.Drawing.Size(136, 21);
+            this.cbxCity.TabIndex = 8;
+            this.cbxCity.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // tbxCareOf
+            // 
+            this.tbxCareOf.Location = new System.Drawing.Point(411, 45);
+            this.tbxCareOf.Name = "tbxCareOf";
+            this.tbxCareOf.Size = new System.Drawing.Size(89, 20);
+            this.tbxCareOf.TabIndex = 12;
+            this.tbxCareOf.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(367, 48);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 13);
+            this.label23.TabIndex = 18;
+            this.label23.Text = "Care of";
+            // 
+            // tbxZipCode
+            // 
+            this.tbxZipCode.Location = new System.Drawing.Point(411, 19);
+            this.tbxZipCode.Name = "tbxZipCode";
+            this.tbxZipCode.Size = new System.Drawing.Size(89, 20);
+            this.tbxZipCode.TabIndex = 11;
+            this.tbxZipCode.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(362, 22);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(50, 13);
+            this.label24.TabIndex = 16;
+            this.label24.Text = "Zip Code";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(180, 48);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(43, 13);
+            this.label22.TabIndex = 14;
+            this.label22.Text = "Country";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(9, 48);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(24, 13);
+            this.label21.TabIndex = 12;
+            this.label21.Text = "City";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(2, 22);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(35, 13);
+            this.label19.TabIndex = 8;
+            this.label19.Text = "Street";
+            // 
+            // tbxStreet
+            // 
+            this.tbxStreet.Location = new System.Drawing.Point(38, 19);
+            this.tbxStreet.Name = "tbxStreet";
+            this.tbxStreet.Size = new System.Drawing.Size(136, 20);
+            this.tbxStreet.TabIndex = 7;
+            this.tbxStreet.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(183, 22);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(36, 13);
+            this.label20.TabIndex = 9;
+            this.label20.Text = "Perish";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(2, 175);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(41, 13);
+            this.label26.TabIndex = 22;
+            this.label26.Text = "Church";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label13);
+            this.groupBox2.Controls.Add(this.tbxFirstName);
+            this.groupBox2.Controls.Add(this.tbxLastName);
+            this.groupBox2.Controls.Add(this.label15);
+            this.groupBox2.Controls.Add(this.tbxMiddleName);
+            this.groupBox2.Controls.Add(this.tbxSuffix);
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.label14);
+            this.groupBox2.Location = new System.Drawing.Point(6, 16);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(296, 66);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Name";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 16);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(26, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "First";
+            // 
+            // tbxFirstName
+            // 
+            this.tbxFirstName.Location = new System.Drawing.Point(38, 13);
+            this.tbxFirstName.Name = "tbxFirstName";
+            this.tbxFirstName.Size = new System.Drawing.Size(136, 20);
+            this.tbxFirstName.TabIndex = 1;
+            this.tbxFirstName.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // tbxLastName
+            // 
+            this.tbxLastName.Location = new System.Drawing.Point(38, 39);
+            this.tbxLastName.Name = "tbxLastName";
+            this.tbxLastName.Size = new System.Drawing.Size(136, 20);
+            this.tbxLastName.TabIndex = 2;
+            this.tbxLastName.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 42);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(27, 13);
+            this.label15.TabIndex = 2;
+            this.label15.Text = "Last";
+            // 
+            // tbxMiddleName
+            // 
+            this.tbxMiddleName.Location = new System.Drawing.Point(224, 13);
+            this.tbxMiddleName.Name = "tbxMiddleName";
+            this.tbxMiddleName.Size = new System.Drawing.Size(65, 20);
+            this.tbxMiddleName.TabIndex = 95;
+            this.tbxMiddleName.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // tbxSuffix
+            // 
+            this.tbxSuffix.Location = new System.Drawing.Point(224, 39);
+            this.tbxSuffix.Name = "tbxSuffix";
+            this.tbxSuffix.Size = new System.Drawing.Size(65, 20);
+            this.tbxSuffix.TabIndex = 96;
+            this.tbxSuffix.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(183, 43);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(33, 13);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Suffix";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(180, 16);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(38, 13);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Middle";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(375, 59);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(38, 13);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "Joined";
+            // 
+            // dtpMembershipDate
+            // 
+            this.dtpMembershipDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpMembershipDate.Location = new System.Drawing.Point(417, 56);
+            this.dtpMembershipDate.Name = "dtpMembershipDate";
+            this.dtpMembershipDate.Size = new System.Drawing.Size(99, 20);
+            this.dtpMembershipDate.TabIndex = 6;
+            this.dtpMembershipDate.Value = new System.DateTime(2018, 12, 13, 20, 8, 0, 0);
+            this.dtpMembershipDate.ValueChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(383, 32);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(28, 13);
+            this.label17.TabIndex = 9;
+            this.label17.Text = "DoB";
+            // 
+            // dtpDoB
+            // 
+            this.dtpDoB.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDoB.Location = new System.Drawing.Point(417, 29);
+            this.dtpDoB.Name = "dtpDoB";
+            this.dtpDoB.Size = new System.Drawing.Size(99, 20);
+            this.dtpDoB.TabIndex = 5;
+            this.dtpDoB.Value = new System.DateTime(2018, 12, 13, 20, 8, 0, 0);
+            this.dtpDoB.ValueChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            // 
+            // gbxMembership
+            // 
+            this.gbxMembership.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbxMembership.Controls.Add(this.cbxInactive);
+            this.gbxMembership.Controls.Add(this.cmdAddMember);
+            this.gbxMembership.Controls.Add(this.dgvMembers);
+            this.gbxMembership.Controls.Add(this.tbxSearch);
+            this.gbxMembership.Controls.Add(this.label12);
+            this.gbxMembership.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gbxMembership.Location = new System.Drawing.Point(3, 3);
+            this.gbxMembership.Name = "gbxMembership";
+            this.gbxMembership.Size = new System.Drawing.Size(288, 483);
+            this.gbxMembership.TabIndex = 0;
+            this.gbxMembership.TabStop = false;
+            this.gbxMembership.Text = "Membership";
+            // 
+            // cbxInactive
+            // 
+            this.cbxInactive.AutoSize = true;
+            this.cbxInactive.Checked = true;
+            this.cbxInactive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxInactive.Location = new System.Drawing.Point(88, 460);
+            this.cbxInactive.Name = "cbxInactive";
+            this.cbxInactive.Size = new System.Drawing.Size(140, 17);
+            this.cbxInactive.TabIndex = 4;
+            this.cbxInactive.Text = "Show Inactive Members";
+            this.cbxInactive.UseVisualStyleBackColor = true;
+            // 
+            // cmdAddMember
+            // 
+            this.cmdAddMember.Location = new System.Drawing.Point(6, 457);
+            this.cmdAddMember.Name = "cmdAddMember";
+            this.cmdAddMember.Size = new System.Drawing.Size(75, 23);
+            this.cmdAddMember.TabIndex = 3;
+            this.cmdAddMember.Text = "Add Member";
+            this.cmdAddMember.UseVisualStyleBackColor = true;
+            this.cmdAddMember.Click += new System.EventHandler(this.cmdAddMember_Click);
+            // 
+            // dgvMembers
+            // 
+            this.dgvMembers.AllowUserToAddRows = false;
+            this.dgvMembers.AllowUserToOrderColumns = true;
+            this.dgvMembers.AllowUserToResizeRows = false;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMembers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dgvMembers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvMembers.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dgvMembers.Location = new System.Drawing.Point(4, 39);
+            this.dgvMembers.MultiSelect = false;
+            this.dgvMembers.Name = "dgvMembers";
+            this.dgvMembers.ReadOnly = true;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMembers.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.dgvMembers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMembers.Size = new System.Drawing.Size(278, 415);
+            this.dgvMembers.TabIndex = 2;
+            this.dgvMembers.SelectionChanged += new System.EventHandler(this.dgvMembers_SelectionChanged);
+            this.dgvMembers.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvMembers_UserDeletingRow);
+            // 
+            // tbxSearch
+            // 
+            this.tbxSearch.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tbxSearch.Location = new System.Drawing.Point(58, 16);
+            this.tbxSearch.Name = "tbxSearch";
+            this.tbxSearch.Size = new System.Drawing.Size(227, 20);
+            this.tbxSearch.TabIndex = 1;
+            this.tbxSearch.TextChanged += new System.EventHandler(this.tbxSearch_TextChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 20);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Search";
             // 
             // tpCourses
             // 
@@ -157,22 +758,23 @@
             this.tpCourses.Location = new System.Drawing.Point(4, 22);
             this.tpCourses.Name = "tpCourses";
             this.tpCourses.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCourses.Size = new System.Drawing.Size(822, 495);
+            this.tpCourses.Size = new System.Drawing.Size(822, 489);
             this.tpCourses.TabIndex = 1;
             this.tpCourses.Text = " Courses";
             this.tpCourses.UseVisualStyleBackColor = true;
             // 
             // gbxCourseDescription
             // 
+            this.gbxCourseDescription.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbxCourseDescription.Controls.Add(this.cbxAdultCourse);
             this.gbxCourseDescription.Controls.Add(this.label11);
             this.gbxCourseDescription.Controls.Add(this.cbxPrereq);
             this.gbxCourseDescription.Controls.Add(this.cmdSaveCourse);
-            this.gbxCourseDescription.Controls.Add(this.cmdAddInventory);
             this.gbxCourseDescription.Controls.Add(this.gbxSections);
             this.gbxCourseDescription.Controls.Add(this.tbxLink);
             this.gbxCourseDescription.Controls.Add(this.llblLink);
             this.gbxCourseDescription.Controls.Add(this.label6);
-            this.gbxCourseDescription.Controls.Add(this.checkBox1);
+            this.gbxCourseDescription.Controls.Add(this.cbxDeprecated);
             this.gbxCourseDescription.Controls.Add(this.label5);
             this.gbxCourseDescription.Controls.Add(this.rbxDescription);
             this.gbxCourseDescription.Controls.Add(this.tbxMaxAge);
@@ -183,8 +785,9 @@
             this.gbxCourseDescription.Controls.Add(this.label2);
             this.gbxCourseDescription.Controls.Add(this.tbxName);
             this.gbxCourseDescription.Controls.Add(this.label1);
+            this.gbxCourseDescription.Dock = System.Windows.Forms.DockStyle.Right;
             this.gbxCourseDescription.Enabled = false;
-            this.gbxCourseDescription.Location = new System.Drawing.Point(296, 6);
+            this.gbxCourseDescription.Location = new System.Drawing.Point(296, 3);
             this.gbxCourseDescription.Name = "gbxCourseDescription";
             this.gbxCourseDescription.Size = new System.Drawing.Size(523, 483);
             this.gbxCourseDescription.TabIndex = 1;
@@ -217,15 +820,6 @@
             this.cmdSaveCourse.Text = "Save Changes";
             this.cmdSaveCourse.UseVisualStyleBackColor = true;
             this.cmdSaveCourse.Click += new System.EventHandler(this.cmdSaveCourse_Click);
-            // 
-            // cmdAddInventory
-            // 
-            this.cmdAddInventory.Location = new System.Drawing.Point(409, 209);
-            this.cmdAddInventory.Name = "cmdAddInventory";
-            this.cmdAddInventory.Size = new System.Drawing.Size(90, 23);
-            this.cmdAddInventory.TabIndex = 15;
-            this.cmdAddInventory.Text = "Add Inventory";
-            this.cmdAddInventory.UseVisualStyleBackColor = true;
             // 
             // gbxSections
             // 
@@ -371,10 +965,34 @@
             this.dgvSections.AllowUserToAddRows = false;
             this.dgvSections.AllowUserToDeleteRows = false;
             this.dgvSections.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSections.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dgvSections.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSections.DefaultCellStyle = dataGridViewCellStyle11;
             this.dgvSections.Location = new System.Drawing.Point(6, 19);
             this.dgvSections.Name = "dgvSections";
             this.dgvSections.ReadOnly = true;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSections.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvSections.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSections.Size = new System.Drawing.Size(225, 219);
             this.dgvSections.TabIndex = 1;
@@ -406,15 +1024,15 @@
             this.label6.TabIndex = 11;
             this.label6.Text = "Link";
             // 
-            // checkBox1
+            // cbxDeprecated
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(417, 48);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(82, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Deprecated";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbxDeprecated.AutoSize = true;
+            this.cbxDeprecated.Location = new System.Drawing.Point(435, 48);
+            this.cbxDeprecated.Name = "cbxDeprecated";
+            this.cbxDeprecated.Size = new System.Drawing.Size(82, 17);
+            this.cbxDeprecated.TabIndex = 4;
+            this.cbxDeprecated.Text = "Deprecated";
+            this.cbxDeprecated.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -508,12 +1126,14 @@
             // 
             // gbxInventory
             // 
+            this.gbxInventory.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.gbxInventory.Controls.Add(this.cbxShowDeprecated);
             this.gbxInventory.Controls.Add(this.cmdNewCourse);
             this.gbxInventory.Controls.Add(this.dgvCourses);
-            this.gbxInventory.Location = new System.Drawing.Point(8, 6);
+            this.gbxInventory.Dock = System.Windows.Forms.DockStyle.Left;
+            this.gbxInventory.Location = new System.Drawing.Point(3, 3);
             this.gbxInventory.Name = "gbxInventory";
-            this.gbxInventory.Size = new System.Drawing.Size(282, 486);
+            this.gbxInventory.Size = new System.Drawing.Size(282, 483);
             this.gbxInventory.TabIndex = 0;
             this.gbxInventory.TabStop = false;
             this.gbxInventory.Text = "Course Inventory";
@@ -527,6 +1147,7 @@
             this.cbxShowDeprecated.TabIndex = 2;
             this.cbxShowDeprecated.Text = "Show Deprecated Courses";
             this.cbxShowDeprecated.UseVisualStyleBackColor = true;
+            this.cbxShowDeprecated.CheckedChanged += new System.EventHandler(this.cbxShowDeprecated_CheckedChanged);
             // 
             // cmdNewCourse
             // 
@@ -543,13 +1164,38 @@
             this.dgvCourses.AllowUserToAddRows = false;
             this.dgvCourses.AllowUserToDeleteRows = false;
             this.dgvCourses.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourses.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dgvCourses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCourses.Location = new System.Drawing.Point(6, 13);
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCourses.DefaultCellStyle = dataGridViewCellStyle14;
+            this.dgvCourses.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvCourses.Location = new System.Drawing.Point(3, 16);
             this.dgvCourses.MultiSelect = false;
             this.dgvCourses.Name = "dgvCourses";
             this.dgvCourses.ReadOnly = true;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCourses.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dgvCourses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCourses.Size = new System.Drawing.Size(270, 443);
+            this.dgvCourses.Size = new System.Drawing.Size(276, 443);
             this.dgvCourses.TabIndex = 0;
             this.dgvCourses.SelectionChanged += new System.EventHandler(this.dgvCourses_SelectionChanged);
             // 
@@ -568,11 +1214,21 @@
             this.openFileDialog1.FileName = "*.json";
             this.openFileDialog1.Filter = "JSON|.json|All Files|*.*";
             // 
+            // cbxAdultCourse
+            // 
+            this.cbxAdultCourse.AutoSize = true;
+            this.cbxAdultCourse.Location = new System.Drawing.Point(383, 48);
+            this.cbxAdultCourse.Name = "cbxAdultCourse";
+            this.cbxAdultCourse.Size = new System.Drawing.Size(50, 17);
+            this.cbxAdultCourse.TabIndex = 19;
+            this.cbxAdultCourse.Text = "Adult";
+            this.cbxAdultCourse.UseVisualStyleBackColor = true;
+            // 
             // frmCLRCore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 545);
+            this.ClientSize = new System.Drawing.Size(830, 539);
             this.Controls.Add(this.tcData);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -581,6 +1237,20 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tcData.ResumeLayout(false);
+            this.tpMembers.ResumeLayout(false);
+            this.gbxMemberDetails.ResumeLayout(false);
+            this.gbxMemberDetails.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompletedSections)).EndInit();
+            this.gbxCompletedCourses.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompletedCourses)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.gbxMembership.ResumeLayout(false);
+            this.gbxMembership.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMembers)).EndInit();
             this.tpCourses.ResumeLayout(false);
             this.gbxCourseDescription.ResumeLayout(false);
             this.gbxCourseDescription.PerformLayout();
@@ -619,7 +1289,7 @@
         private System.Windows.Forms.TextBox tbxLink;
         private System.Windows.Forms.LinkLabel llblLink;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbxDeprecated;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox rbxDescription;
         private System.Windows.Forms.GroupBox gbxSections;
@@ -636,7 +1306,6 @@
         private System.Windows.Forms.RichTextBox tbxInvLocations;
         private System.Windows.Forms.TextBox tbxInventory;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button cmdAddInventory;
         private System.Windows.Forms.CheckBox cbxShowDeprecated;
         private System.Windows.Forms.Button cmdNewCourse;
         private System.Windows.Forms.Button cmdSaveCourse;
@@ -646,6 +1315,51 @@
         private System.Windows.Forms.ToolStripMenuItem miSaveAs;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.GroupBox gbxMembership;
+        private System.Windows.Forms.TextBox tbxSearch;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox cbxInactive;
+        private System.Windows.Forms.Button cmdAddMember;
+        private System.Windows.Forms.DataGridView dgvMembers;
+        private System.Windows.Forms.GroupBox gbxMemberDetails;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.DateTimePicker dtpMembershipDate;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.DateTimePicker dtpDoB;
+        private System.Windows.Forms.TextBox tbxLastName;
+        private System.Windows.Forms.TextBox tbxSuffix;
+        private System.Windows.Forms.TextBox tbxMiddleName;
+        private System.Windows.Forms.TextBox tbxFirstName;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox tbxStreet;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox tbxCareOf;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox tbxZipCode;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.CheckBox cbxAdult;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox gbxCompletedCourses;
+        private System.Windows.Forms.DataGridView dgvCompletedCourses;
+        private System.Windows.Forms.CheckBox cbxProfOfFaith;
+        private System.Windows.Forms.ComboBox cbxDenomination;
+        private System.Windows.Forms.ComboBox cbxChurch;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ComboBox cbxCountry;
+        private System.Windows.Forms.ComboBox cbxPerish;
+        private System.Windows.Forms.ComboBox cbxCity;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.DataGridView dgvCompletedSections;
+        private System.Windows.Forms.Button cmdSaveMember;
+        private System.Windows.Forms.CheckBox cbxAdultCourse;
     }
 }
 

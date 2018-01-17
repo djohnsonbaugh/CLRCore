@@ -15,14 +15,28 @@ namespace CLRCore
         private CLRCoreData CLRData;
         private Course SelectedCourse;
         private Section SelectedSection;
+        private Member SelectedMember;
         private BindingList<Section> TempSections;
+        private BindingList<Member> Members;
+        private BindingList<Course> Courses;
+        private BindingList<CourseStateDisplay> CompletedCourses;
         private string CurrentFile;
+        private string searchlock = "";
         public frmCLRCore()
         {
-            CLRData = new CLRCoreData();
             InitializeComponent();
+            LoadCLRCoreData(new CLRCoreData());
+        }
+
+        public void LoadCLRCoreData(CLRCoreData clrcd)
+        {
+            CLRData = clrcd;
             InitCourseInventory();
             InitSectionInventory();
+            InitMembership();
+            InitMemberDetailCombos();
+            InitCompletedCourses();
+            CLRData.MemberSearchComplete += MemberSearchEventHandler;
         }
 
         #region Init
@@ -30,20 +44,28 @@ namespace CLRCore
         {
             dgvCourses.AutoGenerateColumns = false;
             dgvCourses.Columns.Clear();
-            dgvCourses.Columns.Add(CreateColumn("Abbr", "Abbr", "Abbreviation", 146));
+            dgvCourses.Columns.Add(CreateColumn("Name", "Name", "Name", 146));
             dgvCourses.Columns.Add(CreateColumn("MinAge", "Min Age", "MinAge", 40));
             dgvCourses.Columns.Add(CreateColumn("MaxAge", "Max Age", "MaxAge", 40));
             dgvCourses.Columns.Add(CreateColumn("MinInventory", "Min Inv", "MinInventory", 40));
             dgvCourses.RowHeadersVisible = false;
-            dgvCourses.DataSource = CLRData.BLCourses;
-
+            UpdateCourses(CLRData.GetCourses("", cbxShowDeprecated.Checked));
+        }
+        private void UpdateCourses(BindingList<Course> courses)
+        {
+            Courses = courses;
+            dgvCourses.DataSource = Courses;
+        }
+        private void cbxShowDeprecated_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCourses(CLRData.GetCourses("", cbxShowDeprecated.Checked));
         }
         private void InitSectionInventory()
         {
             dgvSections.AutoGenerateColumns = false;
             dgvSections.Columns.Clear();
             dgvSections.Columns.Add(CreateColumn("ID", "ID", "ID", 40));
-            dgvSections.Columns.Add(CreateColumn("Abbr", "Abbr", "Abbreviation", 146));
+            dgvSections.Columns.Add(CreateColumn("Name", "Name", "Name", 146));
             dgvSections.Columns.Add(CreateColumn("Inventory", "Inv", "Inventory", 40));
             dgvSections.RowHeadersVisible = false;
 
@@ -65,17 +87,19 @@ namespace CLRCore
         #region Command Buttons
         private void cmdNewCourse_Click(object sender, EventArgs e)
         {
-            CLRData.CreateNewCourse();
-            SelectCourseRow("");
-            SelectCourseRow("");
+            Course c = CLRData.CreateNewCourse();
+            Courses.Add(c);
+            SelectCourseRow(c.ID);
+            SelectCourseRow(c.ID);
             tbxName.Focus();
 
         }
         private void cmdNewSection_Click(object sender, EventArgs e)
         {
-            TempSections.Add(new CLRCore.Section(TempSections.Count + 1, "", ""));
-            SelectSectionRow("");
-            SelectSectionRow("");
+            int id = TempSections.Count + 1;
+            TempSections.Add(new CLRCore.Section(id, "Book " + id.ToString() , "Bk"+id.ToString()));
+            SelectSectionRow("Book " + id.ToString());
+            SelectSectionRow("Book " + id.ToString());
             tbxSectionName.Focus();
 
         }
@@ -86,31 +110,17 @@ namespace CLRCore
             SelectedCourse = c;
             cbxPrereq.Items.Clear();
             cbxPrereq.Text = "";
-            if (c == null)
-            {
-                tbxName.Text = "";
-                tbxAbbr.Text = "";
-                tbxMinAge.Text = "0";
-                tbxMaxAge.Text = "120";
-                tbxLink.Text = "";
-                rbxDescription.Text = "";
-                cbxShowDeprecated.Checked = false;
-                TempSections = new BindingList<Section>();
-                foreach (Course co in CLRData.BLCourses) if(co.Name != tbxName.Text) cbxPrereq.Items.Add(co.Name);
-            }
-            else
-            {
-                tbxName.Text = SelectedCourse.Name;
-                tbxAbbr.Text = SelectedCourse.Abbreviation;
-                tbxMinAge.Text = SelectedCourse.MinAge.ToString();
-                tbxMaxAge.Text = SelectedCourse.MaxAge.ToString();
-                tbxLink.Text = SelectedCourse.Link;
-                rbxDescription.Text = SelectedCourse.Description;
-                cbxShowDeprecated.Checked = SelectedCourse.Deprecated;
-                TempSections = SelectedCourse.CopySections();
-                foreach (Course co in CLRData.BLCourses) if (co.Name != tbxName.Text) cbxPrereq.Items.Add(co.Name);
-                if (SelectedCourse.Prerequisites != null) cbxPrereq.Text = SelectedCourse.Prerequisites.Name; 
-            }
+            tbxName.Text = SelectedCourse.Name;
+            tbxAbbr.Text = SelectedCourse.Abbreviation;
+            tbxMinAge.Text = SelectedCourse.MinAge.ToString();
+            tbxMaxAge.Text = SelectedCourse.MaxAge.ToString();
+            tbxLink.Text = SelectedCourse.Link;
+            rbxDescription.Text = SelectedCourse.Description;
+            cbxAdultCourse.Checked = SelectedCourse.Adult;
+            cbxDeprecated.Checked = SelectedCourse.Deprecated;
+            TempSections = SelectedCourse.CopySections();
+            foreach (Course co in Courses) if (co.Name != tbxName.Text) cbxPrereq.Items.Add(co);
+            if (SelectedCourse.PrerequisiteID != -1) cbxPrereq.Text = CLRData.GetCourse(SelectedCourse.PrerequisiteID).Name;
             dgvSections.DataSource = TempSections;
 
         }
@@ -134,8 +144,9 @@ namespace CLRCore
 
         private void dgvCourses_SelectionChanged(object sender, EventArgs e)
         {
-            SelectedCourse = (Course)dgvCourses.CurrentRow.DataBoundItem;
-            LoadCourse(SelectedCourse);
+            Course c = (Course)dgvCourses.CurrentRow.DataBoundItem;
+            if (SelectedCourse ==  null) LoadCourse(c);
+            if (SelectedCourse.ID != c.ID) LoadCourse(c);
             gbxCourseDescription.Enabled = true;
         }
         private void dgvSections_SelectionChanged(object sender, EventArgs e)
@@ -154,11 +165,12 @@ namespace CLRCore
             SelectedCourse.MaxAge = int.Parse(tbxMaxAge.Text);
             SelectedCourse.Link = tbxLink.Text;
             SelectedCourse.Description = rbxDescription.Text;
-            SelectedCourse.Deprecated = cbxShowDeprecated.Checked;
-            if (cbxPrereq.Text != "") SelectedCourse.Prerequisites = CLRData.GetCourse(cbxPrereq.Text);
-            else SelectedCourse.Prerequisites = null;
+            SelectedCourse.Adult = cbxAdultCourse.Checked;
+            SelectedCourse.Deprecated = cbxDeprecated.Checked;
+            if (cbxPrereq.SelectedItem != null) SelectedCourse.PrerequisiteID = ((Course)cbxPrereq.SelectedItem).ID;
+            else SelectedCourse.PrerequisiteID = -1;
             SelectedCourse.UpdateSections(TempSections);
-            SelectCourseRow(SelectedCourse.Name);
+            SelectCourseRow(SelectedCourse.ID);
         }
         private void SaveSection()
         {
@@ -174,15 +186,15 @@ namespace CLRCore
 
         }
 
-        private void SelectCourseRow(string name)
+        private void SelectCourseRow(int id)
         {
             dgvCourses.ClearSelection();
-            foreach(DataGridViewRow row in dgvCourses.Rows)
+            foreach (DataGridViewRow row in dgvCourses.Rows)
             {
                 Course c = (Course)row.DataBoundItem;
                 if (c != null)
                 {
-                    if (c.Name == name)
+                    if (c.ID == id)
                     {
                         row.Selected = true;
                         dgvCourses.CurrentCell = dgvCourses.Rows[row.Index].Cells[0];
@@ -233,7 +245,7 @@ namespace CLRCore
                 errorProvider1.SetError(tbxSectionName, "Unique name is required.");
                 e.Cancel = true;
             }
-            if (!SectionNameUnique(tbxSectionName.Text))
+            if (!SectionNameUnique(tbxSectionName.Text) && tbxSectionName.Text != SelectedSection.Name)
             {
                 tbxSectionName.Select(0, tbxSectionName.Text.Length);
                 errorProvider1.SetError(tbxSectionName, "Name provided is not unique.");
@@ -265,7 +277,7 @@ namespace CLRCore
                 errorProvider1.SetError(tbxSectionAbbr, "Unique abbreviation is required.");
                 e.Cancel = true;
             }
-            if (!SectionAbbrUnique(tbxSectionAbbr.Text))
+            if (!SectionAbbrUnique(tbxSectionAbbr.Text) && tbxSectionAbbr.Text != SelectedSection.Abbreviation)
             {
                 tbxSectionAbbr.Select(0, tbxSectionAbbr.Text.Length);
                 errorProvider1.SetError(tbxSectionAbbr, "Abbreviation provided is not unique.");
@@ -301,7 +313,7 @@ namespace CLRCore
         private void tbxInventory_Validating(object sender, CancelEventArgs e)
         {
             int inv = 0;
-            
+
             if (!int.TryParse(tbxInventory.Text, out inv))
             {
                 tbxInventory.Select(0, tbxInventory.Text.Length);
@@ -340,7 +352,7 @@ namespace CLRCore
             }
             return;
         }
-  
+
         private void CourseDetail_Validated(object sender, EventArgs e)
         {
             errorProvider1.SetError((Control)sender, "");
@@ -391,13 +403,13 @@ namespace CLRCore
                 BindingList<Section> tmp = new BindingList<CLRCore.Section>();
                 TempSections[id - 1].ID++;
                 TempSections[id].ID--;
-                for (int i = 1; i<= TempSections.Count; i++)
+                for (int i = 1; i <= TempSections.Count; i++)
                 {
-                    if(i == id)
+                    if (i == id)
                     {
                         tmp.Add(TempSections[i]);
                     }
-                    else if (i == id+1)
+                    else if (i == id + 1)
                     {
                         tmp.Add(TempSections[i - 2]);
                     }
@@ -434,7 +446,7 @@ namespace CLRCore
         }
         private bool SectionNameUnique(string name)
         {
-            foreach(Section s in TempSections)
+            foreach (Section s in TempSections)
             {
                 if (s.Name == name) return false;
             }
@@ -466,15 +478,16 @@ namespace CLRCore
 
         private void miOpen_Click(object sender, EventArgs e)
         {
-            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    CLRData = CLRFileOps.OpenFile(openFileDialog1.FileName);
-                    CLRData.FixPrereqRef();
-                    dgvCourses.DataSource = CLRData.BLCourses;
+                    CLRCoreData ccd = CLRFileOps.OpenFile(openFileDialog1.FileName);
+                    //ccd.FixPrereqRef();
+                    //dgvCourses.DataSource = ccd.BLCourses;
                     CurrentFile = openFileDialog1.FileName;
                     this.Text = "Caribbean Radio Light House Correspondence Program [" + CurrentFile + "]";
+                    LoadCLRCoreData(ccd);
                 }
                 catch (Exception ex)
                 {
@@ -482,18 +495,18 @@ namespace CLRCore
                 }
             }
         }
-    
+
 
         private void miSave_Click(object sender, EventArgs e)
         {
-                try
-                {
-                    CLRFileOps.SaveFile(CurrentFile, CLRData);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Save Failed: " + ex.Message);
-                }
+            try
+            {
+                CLRFileOps.SaveFile(CurrentFile, CLRData);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Save Failed: " + ex.Message);
+            }
         }
 
         private void miSaveAs_Click(object sender, EventArgs e)
@@ -512,5 +525,221 @@ namespace CLRCore
                 }
             }
         }
+
+        private void tpMembers_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #region Member Tab
+        private void InitMembership()
+        {
+            gbxMemberDetails.Enabled = false;
+            dgvMembers.AutoGenerateColumns = false;
+            dgvMembers.Columns.Clear();
+            dgvMembers.Columns.Add(CreateColumn("ID", "ID", "ID", 30));
+            dgvMembers.Columns.Add(CreateColumn("First", "First", "FirstName", 74));
+            dgvMembers.Columns.Add(CreateColumn("Last", "Last", "LastName", 74));
+            dgvMembers.Columns.Add(CreateColumn("Age", "Age", "AgeorAdult", 32));
+            dgvMembers.Columns.Add(CreateColumn("Country", "Country", "Country", 60));
+            dgvMembers.RowHeadersVisible = false;
+            UpdateMembership(CLRData.GetMembership("", cbxInactive.Checked));
+
+        }
+        private void InitCompletedCourses()
+        {
+            dgvCompletedCourses.AutoGenerateColumns = false;
+            dgvCompletedCourses.Columns.Clear();
+            dgvCompletedCourses.Columns.Add(CreateColumn("Name", "Name", "Name", 74));
+            dgvCompletedCourses.Columns.Add(CreateColumn("Completed", "Completed", "CompletionDate", 74));
+            dgvCompletedCourses.RowHeadersVisible = false;
+        }
+        private void UpdateMembership(BindingList<Member> members)
+        {
+            Members = members;
+            dgvMembers.DataSource = Members;
+        }
+        private void InitMemberDetailCombos()
+        {
+            PopulateCombo(cbxCity, CLRData.Cities);
+            PopulateCombo(cbxPerish, CLRData.Perishes);
+            PopulateCombo(cbxCountry, CLRData.Countries);
+            PopulateCombo(cbxChurch, CLRData.Churches);
+            PopulateCombo(cbxDenomination, CLRData.Denominiations);
+        }
+        private void PopulateCombo(ComboBox cb, SortedSet<string> ss)
+        {
+            cb.Items.Clear();
+            foreach (string s in ss) cb.Items.Add(s);
+        }
+
+        #endregion
+
+        private void cmdAddMember_Click(object sender, EventArgs e)
+        {
+            Member m = CLRData.CreateNewMember();
+            Members.Add(m);
+            SelectMember(m.ID);
+            SelectMember(m.ID);
+            tbxFirstName.Focus();
+        }
+        private void SelectMember(int id)
+        {
+            dgvMembers.ClearSelection();
+            foreach (DataGridViewRow row in dgvMembers.Rows)
+            {
+                Member m = (Member)row.DataBoundItem;
+                if (m != null)
+                {
+                    if (m.ID == id)
+                    {
+                        row.Selected = true;
+                        dgvMembers.CurrentCell = dgvMembers.Rows[row.Index].Cells[0];
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void dgvMembers_SelectionChanged(object sender, EventArgs e)
+        {
+            Member m = (Member)dgvMembers.CurrentRow.DataBoundItem;
+            if (SelectedMember == null) LoadMember(m);
+            if (SelectedMember.ID != m.ID) LoadMember(m);
+            gbxMemberDetails.Enabled = true;
+        }
+
+        private void LoadMember(Member m)
+        {
+            if (SelectedMember != null)
+            {
+                if (!AreMemberDetailsSaved())
+                {
+                    if (MessageBox.Show("Member details have not been saved! Would you like to save now?",
+                                        "Unsaved Detail Warning!",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Warning,
+                                        MessageBoxDefaultButton.Button1
+                                        ) == DialogResult.Yes
+                        )
+                    {
+                        SaveMemberDetails();
+                    }
+
+                }
+            }
+            SelectedMember = m;
+            tbxFirstName.Text = m.FirstName;
+            tbxLastName.Text = m.LastName;
+            tbxMiddleName.Text = m.MiddleName;
+            tbxSuffix.Text = m.Suffix;
+            cbxAdult.Checked = m.Adult;
+            cbxProfOfFaith.Checked = m.ProffessionOfFaith;
+            dtpDoB.Value = m.DoB;
+            dtpMembershipDate.Value = m.MembershipDate;
+            tbxStreet.Text = m.Address.Street;
+            cbxCity.Text = m.Address.City;
+            cbxPerish.Text = m.Address.Perish;
+            cbxCountry.Text = m.Address.Country;
+            tbxZipCode.Text = m.Address.ZipCode;
+            tbxCareOf.Text = m.Address.CareOf;
+            cbxChurch.Text = m.Church;
+            cbxDenomination.Text = m.Denominiation;
+            UpdateCompletedCourses(m.ID);
+        }
+        private void UpdateCompletedCourses(int id)
+        {
+            CompletedCourses = CLRData.GetCompletedCourses(id);
+            dgvCompletedCourses.DataSource = CompletedCourses;
+        }
+        private void MemberDetails_TextChanged(object sender, EventArgs e)
+        {
+            UpdateMemberDetailsStatus();
+        }
+
+        private bool AreMemberDetailsSaved()
+        {
+            if (tbxFirstName.Text != SelectedMember.FirstName) return false;
+            if (tbxLastName.Text != SelectedMember.LastName) return false;
+            if (tbxMiddleName.Text != SelectedMember.MiddleName) return false;
+            if (tbxSuffix.Text != SelectedMember.Suffix) return false;
+            if (cbxAdult.Checked != SelectedMember.Adult) return false;
+            if (cbxProfOfFaith.Checked != SelectedMember.ProffessionOfFaith) return false;
+            if (dtpDoB.Value != SelectedMember.DoB) return false;
+            if (dtpMembershipDate.Value != SelectedMember.MembershipDate) return false;
+            if (tbxStreet.Text != SelectedMember.Address.Street) return false;
+            if (cbxCity.Text != SelectedMember.Address.City) return false;
+            if (cbxPerish.Text != SelectedMember.Address.Perish) return false;
+            if (cbxCountry.Text != SelectedMember.Address.Country) return false;
+            if (tbxZipCode.Text != SelectedMember.Address.ZipCode) return false;
+            if (tbxCareOf.Text != SelectedMember.Address.CareOf) return false;
+            if (cbxChurch.Text != SelectedMember.Church) return false;
+            if (cbxDenomination.Text != SelectedMember.Denominiation) return false;
+            return true;
+        }
+        private void UpdateMemberDetailsStatus()
+        {
+            gbxMemberDetails.Text = (AreMemberDetailsSaved()) ? "Member Details" : "Member Details *MODIFIED*";
+        }
+        private void SaveMemberDetails()
+        {
+            SelectedMember.FirstName = tbxFirstName.Text;
+            SelectedMember.LastName = tbxLastName.Text;
+            SelectedMember.MiddleName = tbxMiddleName.Text;
+            SelectedMember.Suffix = tbxSuffix.Text;
+            SelectedMember.Adult = cbxAdult.Checked;
+            SelectedMember.ProffessionOfFaith = cbxProfOfFaith.Checked;
+            SelectedMember.DoB = dtpDoB.Value;
+            SelectedMember.MembershipDate = dtpMembershipDate.Value;
+            SelectedMember.Address.Street = tbxStreet.Text;
+            SelectedMember.Address.City = cbxCity.Text;
+            SelectedMember.Address.Perish = cbxPerish.Text;
+            SelectedMember.Address.Country = cbxCountry.Text;
+            SelectedMember.Address.ZipCode = tbxZipCode.Text;
+            SelectedMember.Address.CareOf = tbxCareOf.Text;
+            SelectedMember.Church = cbxChurch.Text;
+            SelectedMember.Denominiation = cbxDenomination.Text;
+            UpdateMemberDetailsStatus();
+        }
+        private void cmdSaveMember_Click(object sender, EventArgs e)
+        {
+            SaveMemberDetails();
+            SelectMember(SelectedMember.ID);
+        }
+
+        private void tbxSearch_TextChanged(object sender, EventArgs e)
+        {
+            lock (searchlock)
+            {
+                CLRData.AsyncGetMembership(tbxSearch.Text, cbxInactive.Checked);
+            }
+        }
+        private void MemberSearchEventHandler(object sender, MemberSearchEventArgs msea)
+        {
+            if (InvokeRequired)
+            {
+                lock (searchlock)
+                {
+                    Invoke(new EventHandler<MemberSearchEventArgs>(MemberSearchEventHandler),
+                        new object[] { sender, msea });
+                }
+            }
+            else UpdateMembership(msea.Members);
+        }
+
+        private void dgvMembers_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            Member m = (Member)e.Row.DataBoundItem;
+            e.Cancel = (MessageBox.Show(string.Format("Are you sure you want to PERMANENTELY DELETE the member '[{2}] {0} {1}' from the membership?", m.FirstName, m.LastName, m.ID.ToString()), "Caution: Deleting Member in Progress!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Cancel);
+            if (!e.Cancel) CLRData.DeleteMember(m.ID);
+        }
+        private void dgvCompletedCourses_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            CourseStateDisplay csd = (CourseStateDisplay)e.Row.DataBoundItem;
+            e.Cancel = (MessageBox.Show(string.Format("Are you sure you want to PERMANENTELY DELETE record of completed course '{3}' for member '[{2}] {0} {1}'?", SelectedMember.FirstName, SelectedMember.LastName, SelectedMember.ID.ToString(),csd.Name), "Caution: Deleting Member in Progress!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Cancel);
+            if (!e.Cancel) SelectedMember.DeleteCourseState(csd.ID);
+        }
+
+
     }
 }

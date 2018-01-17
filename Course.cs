@@ -9,13 +9,15 @@ namespace CLRCore
 {
     public class Course
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Abbreviation { get; set; }
         public SortedList<int, Section> Sections;
         public int MinAge {get; set;}
         public int MinInventory {  get { return GetMinimumInventory(); } }
         public int MaxAge { get; set; }
-        public Course Prerequisites;
+        public bool Adult { get; set; }
+        public int PrerequisiteID;
         public string Description { get; set; }
         public string Link { get; set; }
         public bool Deprecated { get; set; }
@@ -23,11 +25,15 @@ namespace CLRCore
         public Course()
         {
             Sections = new SortedList<int, CLRCore.Section>();
-            Prerequisites = null;
+            PrerequisiteID = -1;
             Name = "";
-            MaxAge = 120;
+            MaxAge = 5000;
         }
-        public Course(string name, string abbreviation) : this()
+        public Course(int id) : this()
+        {
+            ID = id;
+        }
+        public Course(int id, string name, string abbreviation) : this(id)
         {
             Name = name;
             Abbreviation = abbreviation;
@@ -67,6 +73,17 @@ namespace CLRCore
             {
                 Sections.Add(s.ID, s);
             }
+        }
+        public bool MatchString(string search)
+        {
+            if (Name != null) if (Name.ToLower().Contains(search.ToLower())) return true;
+            if (Abbreviation != null) if (Abbreviation.ToLower().Contains(search.ToLower())) return true;
+            if (ID.ToString().Contains(search.ToLower())) return true;
+            return false;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
