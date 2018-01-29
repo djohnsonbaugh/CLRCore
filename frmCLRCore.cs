@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace CLRCore
 {
@@ -97,7 +98,7 @@ namespace CLRCore
         private void cmdNewSection_Click(object sender, EventArgs e)
         {
             int id = TempSections.Count + 1;
-            TempSections.Add(new CLRCore.Section(id, "Book " + id.ToString() , "Bk"+id.ToString()));
+            TempSections.Add(new CLRCore.Section(id, "Book " + id.ToString(), "Bk" + id.ToString()));
             SelectSectionRow("Book " + id.ToString());
             SelectSectionRow("Book " + id.ToString());
             tbxSectionName.Focus();
@@ -145,7 +146,7 @@ namespace CLRCore
         private void dgvCourses_SelectionChanged(object sender, EventArgs e)
         {
             Course c = (Course)dgvCourses.CurrentRow.DataBoundItem;
-            if (SelectedCourse ==  null) LoadCourse(c);
+            if (SelectedCourse == null) LoadCourse(c);
             if (SelectedCourse.ID != c.ID) LoadCourse(c);
             gbxCourseDescription.Enabled = true;
         }
@@ -562,7 +563,7 @@ namespace CLRCore
         private void InitMemberDetailCombos()
         {
             PopulateCombo(cbxCity, CLRData.Cities);
-            PopulateCombo(cbxPerish, CLRData.Perishes);
+            PopulateCombo(cbxState, CLRData.States);
             PopulateCombo(cbxCountry, CLRData.Countries);
             PopulateCombo(cbxChurch, CLRData.Churches);
             PopulateCombo(cbxDenomination, CLRData.Denominiations);
@@ -637,12 +638,13 @@ namespace CLRCore
             cbxProfOfFaith.Checked = m.ProffessionOfFaith;
             dtpDoB.Value = m.DoB;
             dtpMembershipDate.Value = m.MembershipDate;
-            tbxStreet.Text = m.Address.Street;
+            tbxLine1.Text = m.Address.Line1;
+            tbxLine2.Text = m.Address.Line2;
             cbxCity.Text = m.Address.City;
-            cbxPerish.Text = m.Address.Perish;
+            cbxState.Text = m.Address.State;
             cbxCountry.Text = m.Address.Country;
             tbxZipCode.Text = m.Address.ZipCode;
-            tbxCareOf.Text = m.Address.CareOf;
+            tbxGuardian.Text = m.Address.Guardian;
             cbxChurch.Text = m.Church;
             cbxDenomination.Text = m.Denominiation;
             UpdateCompletedCourses(m.ID);
@@ -659,23 +661,29 @@ namespace CLRCore
 
         private bool AreMemberDetailsSaved()
         {
-            if (tbxFirstName.Text != SelectedMember.FirstName) return false;
-            if (tbxLastName.Text != SelectedMember.LastName) return false;
-            if (tbxMiddleName.Text != SelectedMember.MiddleName) return false;
-            if (tbxSuffix.Text != SelectedMember.Suffix) return false;
+            if (tbxFirstName.Text != NVL(SelectedMember.FirstName)) return false;
+            if (tbxLastName.Text != NVL(SelectedMember.LastName)) return false;
+            if (tbxMiddleName.Text != NVL(SelectedMember.MiddleName)) return false;
+            if (tbxSuffix.Text != NVL(SelectedMember.Suffix)) return false;
             if (cbxAdult.Checked != SelectedMember.Adult) return false;
             if (cbxProfOfFaith.Checked != SelectedMember.ProffessionOfFaith) return false;
             if (dtpDoB.Value != SelectedMember.DoB) return false;
             if (dtpMembershipDate.Value != SelectedMember.MembershipDate) return false;
-            if (tbxStreet.Text != SelectedMember.Address.Street) return false;
-            if (cbxCity.Text != SelectedMember.Address.City) return false;
-            if (cbxPerish.Text != SelectedMember.Address.Perish) return false;
-            if (cbxCountry.Text != SelectedMember.Address.Country) return false;
-            if (tbxZipCode.Text != SelectedMember.Address.ZipCode) return false;
-            if (tbxCareOf.Text != SelectedMember.Address.CareOf) return false;
-            if (cbxChurch.Text != SelectedMember.Church) return false;
-            if (cbxDenomination.Text != SelectedMember.Denominiation) return false;
+            if (tbxLine1.Text != NVL(SelectedMember.Address.Line1)) return false;
+            if (tbxLine2.Text != NVL(SelectedMember.Address.Line2)) return false;
+            if (cbxCity.Text != NVL(SelectedMember.Address.City)) return false;
+            if (cbxState.Text != NVL(SelectedMember.Address.State)) return false;
+            if (cbxCountry.Text != NVL(SelectedMember.Address.Country)) return false;
+            if (tbxZipCode.Text != NVL(SelectedMember.Address.ZipCode)) return false;
+            if (tbxGuardian.Text != NVL(SelectedMember.Address.Guardian)) return false;
+            if (cbxChurch.Text != NVL(SelectedMember.Church)) return false;
+            if (cbxDenomination.Text != NVL(SelectedMember.Denominiation)) return false;
             return true;
+        }
+        private string NVL(string s)
+        {
+            if (s == null) return "";
+            else return s;
         }
         private void UpdateMemberDetailsStatus()
         {
@@ -691,12 +699,13 @@ namespace CLRCore
             SelectedMember.ProffessionOfFaith = cbxProfOfFaith.Checked;
             SelectedMember.DoB = dtpDoB.Value;
             SelectedMember.MembershipDate = dtpMembershipDate.Value;
-            SelectedMember.Address.Street = tbxStreet.Text;
+            SelectedMember.Address.Line1 = tbxLine1.Text;
+            SelectedMember.Address.Line2 = tbxLine2.Text;
             SelectedMember.Address.City = cbxCity.Text;
-            SelectedMember.Address.Perish = cbxPerish.Text;
+            SelectedMember.Address.State = cbxState.Text;
             SelectedMember.Address.Country = cbxCountry.Text;
             SelectedMember.Address.ZipCode = tbxZipCode.Text;
-            SelectedMember.Address.CareOf = tbxCareOf.Text;
+            SelectedMember.Address.Guardian = tbxGuardian.Text;
             SelectedMember.Church = cbxChurch.Text;
             SelectedMember.Denominiation = cbxDenomination.Text;
             UpdateMemberDetailsStatus();
@@ -736,10 +745,148 @@ namespace CLRCore
         private void dgvCompletedCourses_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             CourseStateDisplay csd = (CourseStateDisplay)e.Row.DataBoundItem;
-            e.Cancel = (MessageBox.Show(string.Format("Are you sure you want to PERMANENTELY DELETE record of completed course '{3}' for member '[{2}] {0} {1}'?", SelectedMember.FirstName, SelectedMember.LastName, SelectedMember.ID.ToString(),csd.Name), "Caution: Deleting Member in Progress!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Cancel);
+            e.Cancel = (MessageBox.Show(string.Format("Are you sure you want to PERMANENTELY DELETE record of completed course '{3}' for member '[{2}] {0} {1}'?", SelectedMember.FirstName, SelectedMember.LastName, SelectedMember.ID.ToString(), csd.Name), "Caution: Deleting Member in Progress!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Cancel);
             if (!e.Cancel) SelectedMember.DeleteCourseState(csd.ID);
         }
 
+        private void cSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CLRData.ResetMembers();
+            Dictionary<string, string> cimap = new Dictionary<string, string>();
+            Dictionary<string, string> smap = new Dictionary<string, string>();
+            Dictionary<string, string> comap = new Dictionary<string, string>();
+            Dictionary<string, string> chmap = new Dictionary<string, string>();
+            Dictionary<string, string> dmap = new Dictionary<string, string>();
+            Dictionary<string, int> coursemap = new Dictionary<string, int>();
+            Dictionary<int, Dictionary<string, int>> secmap = new Dictionary<int, Dictionary<string, int>>();
 
+            if (ofdCSV.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (StreamReader file = new StreamReader(ofdCSV.FileName))
+                    {
+                        file.ReadLine();
+                        file.ReadLine();
+                        while (file.Peek() != -1)
+                        {
+                            string line = file.ReadLine();
+                            string[] fields = line.Split(',');
+                            Member m = CLRData.CreateNewMember();
+                            m.FirstName = fields[0].Trim();
+                            m.LastName = fields[1].Trim();
+                            string guardian = fields[2].Replace(@"C/O", "").Replace(@"c/o", "").Replace(@"C/o", "").Replace(@"c/O", "").Trim();
+                            m.Address.Guardian = guardian;
+                            m.Address.Line1 = fields[3].Trim();
+                            m.Address.Line2 = fields[4].Trim();
+                            m.Address.City = GetInfo(fields[5].Trim(), CLRData.Cities, cimap);
+                            m.Address.State = GetInfo(fields[6].Trim(),CLRData.States,smap);
+                            m.Address.ZipCode = fields[7].Trim();
+                            m.Address.Country = GetInfo(fields[8].Trim(), CLRData.Countries, comap);
+                            m.DoB = ParseDate(fields[9].Trim());
+                            m.MembershipDate = ParseDate(fields[58].Trim());
+                            m.ProffessionOfFaith = (fields[59].ToUpper().Contains("Y"));
+                            m.Comment = fields[12].Trim() + "; " + fields[13].Trim();
+                            if (m.MembershipDate == null && m.DoB != null) m.MembershipDate = m.DoB.AddYears(4);
+
+                            //m.Denominiation = GetInfo(fields[11].Trim(), CLRData.Denominiations, dmap);
+                            m.Denominiation = fields[11].Trim();
+                            CourseState cur = new CourseState(GetCourseID(fields[14].Trim(), coursemap, CLRData.GetAbbreviations()));
+                            Course c = CLRData.Courses[cur.ID];
+                            if (!secmap.ContainsKey(cur.ID)) secmap.Add(cur.ID, new Dictionary<string, int>());
+                            SectionState sec = new SectionState(GetSectionID(fields[15].Trim(), secmap[cur.ID], c));
+                            sec.MailedDate = ParseDate(fields[16].Trim());
+                            sec.Mailed = true;
+                            cur.SetCurrentSection(sec, c);
+                            m.CurrentCourse = cur;
+                            for(int i=0; i<10; i++)
+                            {
+                                string buf = fields[17 + i*2];
+                                DateTime ccdt = ParseDate(fields[18 + i * 2]);
+                                if (ccdt == null) ccdt = m.MembershipDate;
+                                string[] buffs = buf.Split(new char[] { ';', '\'', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (string sbuf in buffs)
+                                {
+                                    cur = new CourseState(GetCourseID(sbuf.Trim(), coursemap, CLRData.GetAbbreviations()));
+                                    cur.CompletionDate = ccdt;
+                                    cur.CertificateDate = ccdt;
+                                    cur.Completed = true;
+                                    cur.CertificateMailed = true;
+                                    if (m.CurrentCourse.ID == cur.ID)
+                                    {
+                                        m.Comment += string.Format("; Current Course '{0}' was completed previously.", c.Name);
+                                    }
+                                    else m.CompletedCourses.Add(cur.ID, cur);
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Read Failed: " + ex.Message);
+                }
+            }
+        }
+        private DateTime ParseDate(string sdt)
+        {
+            DateTime dt;
+            if (DateTime.TryParse(sdt, out dt))
+            {
+                if (dt.AddYears(100) < DateTime.Now) dt = dt.AddYears(100);
+            }
+            return dt;
+        }
+        private int GetSectionID(string abbr, Dictionary<string, int> map, Course c)
+        {
+            int sid = -1;
+            if (!c.TryFindSectionByAbbr(abbr, out sid))
+            {
+                if (map.ContainsKey(abbr)) sid = map[abbr];
+                else
+                {
+                    DataImportInfo dii = new CLRCore.DataImportInfo(c.GetSections(), abbr);
+                    string temp = dii.GetInput();
+                    c.TryFindSectionByName(temp, out sid);
+                    map.Add(abbr, sid);
+                }
+            }
+            return sid;
+        }
+        private int GetCourseID(string abbr, Dictionary<string,int> map, SortedSet<string> set)
+        {
+            int cid = -1;
+            if (!CLRData.TryFindCourseByAbbr(abbr,out cid))
+            {
+                if (map.ContainsKey(abbr)) cid = map[abbr];
+                else
+                {
+                    DataImportInfo dii = new CLRCore.DataImportInfo(set, abbr);
+                    string temp = dii.GetInput();
+                    CLRData.TryFindCourseByAbbr(temp, out cid);
+                    map.Add(abbr, cid);
+                }
+            }
+            return cid;
+        }
+        private string GetInfo(string s, SortedSet<string> set, Dictionary<string,string> map)
+        {
+            if (s != "" && !set.Contains(s) && !map.ContainsKey(s))
+            {
+                DataImportInfo dii = new CLRCore.DataImportInfo(set, s);
+                string temp = dii.GetInput();
+                map.Add(s, temp);
+                return temp;
+            }
+            else if (map.ContainsKey(s))
+            {
+                return map[s];
+            }
+            else
+                return s;
+        }
     }
 }
+

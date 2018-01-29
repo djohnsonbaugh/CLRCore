@@ -64,16 +64,16 @@
             this.label25 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cbxCountry = new System.Windows.Forms.ComboBox();
-            this.cbxPerish = new System.Windows.Forms.ComboBox();
+            this.cbxState = new System.Windows.Forms.ComboBox();
             this.cbxCity = new System.Windows.Forms.ComboBox();
-            this.tbxCareOf = new System.Windows.Forms.TextBox();
+            this.tbxGuardian = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.tbxZipCode = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.tbxStreet = new System.Windows.Forms.TextBox();
+            this.tbxLine1 = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -97,6 +97,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.tpCourses = new System.Windows.Forms.TabPage();
             this.gbxCourseDescription = new System.Windows.Forms.GroupBox();
+            this.cbxAdultCourse = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cbxPrereq = new System.Windows.Forms.ComboBox();
             this.cmdSaveCourse = new System.Windows.Forms.Button();
@@ -135,7 +136,12 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.cbxAdultCourse = new System.Windows.Forms.CheckBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.tbxLine2 = new System.Windows.Forms.TextBox();
+            this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.membersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ofdCSV = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.tcData.SuspendLayout();
             this.tpMembers.SuspendLayout();
@@ -160,7 +166,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miFile});
+            this.miFile,
+            this.importToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(830, 24);
@@ -180,21 +187,21 @@
             // miOpen
             // 
             this.miOpen.Name = "miOpen";
-            this.miOpen.Size = new System.Drawing.Size(123, 22);
+            this.miOpen.Size = new System.Drawing.Size(152, 22);
             this.miOpen.Text = "Open...";
             this.miOpen.Click += new System.EventHandler(this.miOpen_Click);
             // 
             // miSave
             // 
             this.miSave.Name = "miSave";
-            this.miSave.Size = new System.Drawing.Size(123, 22);
+            this.miSave.Size = new System.Drawing.Size(152, 22);
             this.miSave.Text = "Save";
             this.miSave.Click += new System.EventHandler(this.miSave_Click);
             // 
             // miSaveAs
             // 
             this.miSaveAs.Name = "miSaveAs";
-            this.miSaveAs.Size = new System.Drawing.Size(123, 22);
+            this.miSaveAs.Size = new System.Drawing.Size(152, 22);
             this.miSaveAs.Text = "Save As...";
             this.miSaveAs.Click += new System.EventHandler(this.miSaveAs_Click);
             // 
@@ -399,17 +406,19 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label27);
+            this.groupBox3.Controls.Add(this.tbxLine2);
             this.groupBox3.Controls.Add(this.cbxCountry);
-            this.groupBox3.Controls.Add(this.cbxPerish);
+            this.groupBox3.Controls.Add(this.cbxState);
             this.groupBox3.Controls.Add(this.cbxCity);
-            this.groupBox3.Controls.Add(this.tbxCareOf);
+            this.groupBox3.Controls.Add(this.tbxGuardian);
             this.groupBox3.Controls.Add(this.label23);
             this.groupBox3.Controls.Add(this.tbxZipCode);
             this.groupBox3.Controls.Add(this.label24);
             this.groupBox3.Controls.Add(this.label22);
             this.groupBox3.Controls.Add(this.label21);
             this.groupBox3.Controls.Add(this.label19);
-            this.groupBox3.Controls.Add(this.tbxStreet);
+            this.groupBox3.Controls.Add(this.tbxLine1);
             this.groupBox3.Controls.Add(this.label20);
             this.groupBox3.Location = new System.Drawing.Point(6, 88);
             this.groupBox3.Name = "groupBox3";
@@ -421,59 +430,59 @@
             // cbxCountry
             // 
             this.cbxCountry.FormattingEnabled = true;
-            this.cbxCountry.Location = new System.Drawing.Point(226, 44);
+            this.cbxCountry.Location = new System.Drawing.Point(212, 44);
             this.cbxCountry.Name = "cbxCountry";
             this.cbxCountry.Size = new System.Drawing.Size(136, 21);
             this.cbxCountry.TabIndex = 10;
             this.cbxCountry.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
-            // cbxPerish
+            // cbxState
             // 
-            this.cbxPerish.FormattingEnabled = true;
-            this.cbxPerish.Location = new System.Drawing.Point(224, 18);
-            this.cbxPerish.Name = "cbxPerish";
-            this.cbxPerish.Size = new System.Drawing.Size(136, 21);
-            this.cbxPerish.TabIndex = 9;
-            this.cbxPerish.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            this.cbxState.FormattingEnabled = true;
+            this.cbxState.Location = new System.Drawing.Point(338, 18);
+            this.cbxState.Name = "cbxState";
+            this.cbxState.Size = new System.Drawing.Size(49, 21);
+            this.cbxState.TabIndex = 9;
+            this.cbxState.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // cbxCity
             // 
             this.cbxCity.FormattingEnabled = true;
-            this.cbxCity.Location = new System.Drawing.Point(38, 44);
+            this.cbxCity.Location = new System.Drawing.Point(197, 17);
             this.cbxCity.Name = "cbxCity";
-            this.cbxCity.Size = new System.Drawing.Size(136, 21);
+            this.cbxCity.Size = new System.Drawing.Size(106, 21);
             this.cbxCity.TabIndex = 8;
             this.cbxCity.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
-            // tbxCareOf
+            // tbxGuardian
             // 
-            this.tbxCareOf.Location = new System.Drawing.Point(411, 45);
-            this.tbxCareOf.Name = "tbxCareOf";
-            this.tbxCareOf.Size = new System.Drawing.Size(89, 20);
-            this.tbxCareOf.TabIndex = 12;
-            this.tbxCareOf.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            this.tbxGuardian.Location = new System.Drawing.Point(411, 45);
+            this.tbxGuardian.Name = "tbxGuardian";
+            this.tbxGuardian.Size = new System.Drawing.Size(89, 20);
+            this.tbxGuardian.TabIndex = 12;
+            this.tbxGuardian.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(367, 48);
+            this.label23.Location = new System.Drawing.Point(354, 48);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(41, 13);
+            this.label23.Size = new System.Drawing.Size(50, 13);
             this.label23.TabIndex = 18;
-            this.label23.Text = "Care of";
+            this.label23.Text = "Guardian";
             // 
             // tbxZipCode
             // 
-            this.tbxZipCode.Location = new System.Drawing.Point(411, 19);
+            this.tbxZipCode.Location = new System.Drawing.Point(442, 19);
             this.tbxZipCode.Name = "tbxZipCode";
-            this.tbxZipCode.Size = new System.Drawing.Size(89, 20);
+            this.tbxZipCode.Size = new System.Drawing.Size(58, 20);
             this.tbxZipCode.TabIndex = 11;
             this.tbxZipCode.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(362, 22);
+            this.label24.Location = new System.Drawing.Point(390, 22);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(50, 13);
             this.label24.TabIndex = 16;
@@ -482,7 +491,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(180, 48);
+            this.label22.Location = new System.Drawing.Point(166, 48);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(43, 13);
             this.label22.TabIndex = 14;
@@ -491,7 +500,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(9, 48);
+            this.label21.Location = new System.Drawing.Point(167, 22);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(24, 13);
             this.label21.TabIndex = 12;
@@ -502,26 +511,26 @@
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(2, 22);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(35, 13);
+            this.label19.Size = new System.Drawing.Size(16, 13);
             this.label19.TabIndex = 8;
-            this.label19.Text = "Street";
+            this.label19.Text = "1:";
             // 
-            // tbxStreet
+            // tbxLine1
             // 
-            this.tbxStreet.Location = new System.Drawing.Point(38, 19);
-            this.tbxStreet.Name = "tbxStreet";
-            this.tbxStreet.Size = new System.Drawing.Size(136, 20);
-            this.tbxStreet.TabIndex = 7;
-            this.tbxStreet.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
+            this.tbxLine1.Location = new System.Drawing.Point(23, 19);
+            this.tbxLine1.Name = "tbxLine1";
+            this.tbxLine1.Size = new System.Drawing.Size(136, 20);
+            this.tbxLine1.TabIndex = 7;
+            this.tbxLine1.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(183, 22);
+            this.label20.Location = new System.Drawing.Point(304, 22);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(36, 13);
+            this.label20.Size = new System.Drawing.Size(32, 13);
             this.label20.TabIndex = 9;
-            this.label20.Text = "Perish";
+            this.label20.Text = "State";
             // 
             // label26
             // 
@@ -793,6 +802,16 @@
             this.gbxCourseDescription.TabIndex = 1;
             this.gbxCourseDescription.TabStop = false;
             this.gbxCourseDescription.Text = "Selected Course Description";
+            // 
+            // cbxAdultCourse
+            // 
+            this.cbxAdultCourse.AutoSize = true;
+            this.cbxAdultCourse.Location = new System.Drawing.Point(383, 48);
+            this.cbxAdultCourse.Name = "cbxAdultCourse";
+            this.cbxAdultCourse.Size = new System.Drawing.Size(50, 17);
+            this.cbxAdultCourse.TabIndex = 19;
+            this.cbxAdultCourse.Text = "Adult";
+            this.cbxAdultCourse.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
@@ -1214,15 +1233,50 @@
             this.openFileDialog1.FileName = "*.json";
             this.openFileDialog1.Filter = "JSON|.json|All Files|*.*";
             // 
-            // cbxAdultCourse
+            // label27
             // 
-            this.cbxAdultCourse.AutoSize = true;
-            this.cbxAdultCourse.Location = new System.Drawing.Point(383, 48);
-            this.cbxAdultCourse.Name = "cbxAdultCourse";
-            this.cbxAdultCourse.Size = new System.Drawing.Size(50, 17);
-            this.cbxAdultCourse.TabIndex = 19;
-            this.cbxAdultCourse.Text = "Adult";
-            this.cbxAdultCourse.UseVisualStyleBackColor = true;
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(2, 47);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(16, 13);
+            this.label27.TabIndex = 20;
+            this.label27.Text = "2:";
+            // 
+            // tbxLine2
+            // 
+            this.tbxLine2.Location = new System.Drawing.Point(23, 44);
+            this.tbxLine2.Name = "tbxLine2";
+            this.tbxLine2.Size = new System.Drawing.Size(136, 20);
+            this.tbxLine2.TabIndex = 19;
+            // 
+            // importToolStripMenuItem
+            // 
+            this.importToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.membersToolStripMenuItem});
+            this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.importToolStripMenuItem.Text = "Import";
+            // 
+            // membersToolStripMenuItem
+            // 
+            this.membersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cSVToolStripMenuItem});
+            this.membersToolStripMenuItem.Name = "membersToolStripMenuItem";
+            this.membersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.membersToolStripMenuItem.Text = "Members";
+            // 
+            // cSVToolStripMenuItem
+            // 
+            this.cSVToolStripMenuItem.Name = "cSVToolStripMenuItem";
+            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cSVToolStripMenuItem.Text = "CSV";
+            this.cSVToolStripMenuItem.Click += new System.EventHandler(this.cSVToolStripMenuItem_Click);
+            // 
+            // ofdCSV
+            // 
+            this.ofdCSV.DefaultExt = "CSV";
+            this.ofdCSV.FileName = "*.CSV";
+            this.ofdCSV.Filter = "CSV Files|*.csv|All files|*.*";
             // 
             // frmCLRCore
             // 
@@ -1336,11 +1390,11 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox tbxStreet;
+        private System.Windows.Forms.TextBox tbxLine1;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox tbxCareOf;
+        private System.Windows.Forms.TextBox tbxGuardian;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox tbxZipCode;
         private System.Windows.Forms.Label label24;
@@ -1354,12 +1408,18 @@
         private System.Windows.Forms.ComboBox cbxChurch;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.ComboBox cbxCountry;
-        private System.Windows.Forms.ComboBox cbxPerish;
+        private System.Windows.Forms.ComboBox cbxState;
         private System.Windows.Forms.ComboBox cbxCity;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.DataGridView dgvCompletedSections;
         private System.Windows.Forms.Button cmdSaveMember;
         private System.Windows.Forms.CheckBox cbxAdultCourse;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox tbxLine2;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem membersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cSVToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog ofdCSV;
     }
 }
 

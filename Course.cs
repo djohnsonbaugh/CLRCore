@@ -38,7 +38,32 @@ namespace CLRCore
             Name = name;
             Abbreviation = abbreviation;
         }
-
+        public SortedSet<string> GetSections()
+        {
+            SortedSet<string> set = new SortedSet<string>();
+            foreach (Section s in Sections.Values) set.Add(s.Name);
+            return set;
+        }
+        public bool TryFindSectionByAbbr(string abbr, out int id)
+        {
+            id = -1;
+            foreach (Section s in Sections.Values) if (s.Abbreviation == abbr)
+                {
+                    id = s.ID;
+                    return true;
+                }
+            return false;
+        }
+        public bool TryFindSectionByName(string name, out int id)
+        {
+            id = -1;
+            foreach (Section s in Sections.Values) if (s.Name == name)
+                {
+                    id = s.ID;
+                    return true;
+                }
+            return false;
+        }
         public void AddSection(Section section)
         {
             Sections.Add(Sections.Count + 1, section);

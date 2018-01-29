@@ -14,7 +14,7 @@ namespace CLRCore
         public Dictionary<int, Course> Courses { get; }
         public Dictionary<int, Member> Members { get; }
         public SortedSet<string> Cities { get; }
-        public SortedSet<string> Perishes { get; }
+        public SortedSet<string> States { get; }
         public SortedSet<string> Countries { get; }
         public SortedSet<string> Churches { get; }
         public SortedSet<string> Denominiations { get; }
@@ -30,13 +30,16 @@ namespace CLRCore
                 eh(this, msea);
             }
         }
-
+        public void ResetMembers()
+        {
+            Members.Clear();
+        }
         public CLRCoreData()
         {
             Courses = new Dictionary<int, Course>();
             Members = new Dictionary<int, Member>();
             Cities = new SortedSet<string>();
-            Perishes = new SortedSet<string>();
+            States = new SortedSet<string>();
             Countries = new SortedSet<string>();
             Churches = new SortedSet<string>();
             Denominiations = new SortedSet<string>();
@@ -114,6 +117,12 @@ namespace CLRCore
             }
             return csds;
         }
+        public SortedSet<string> GetAbbreviations()
+        {
+            SortedSet<string> set = new SortedSet<string>();
+            foreach (Course c in Courses.Values) set.Add(c.Abbreviation);
+            return set;
+        }
         public int GetNextMemberID()
         {
             int nextid = Members.Count;
@@ -142,6 +151,16 @@ namespace CLRCore
         public bool CourseAbbrExists(string abbr)
         {
             foreach (Course c in Courses.Values) if (c.Abbreviation == abbr) return true;
+            return false;
+        }
+        public bool TryFindCourseByAbbr(string abbr, out int id)
+        {
+            id = -1;
+            foreach (Course c in Courses.Values) if (c.Abbreviation == abbr)
+                {
+                    id = c.ID;
+                    return true;
+                }
             return false;
         }
 

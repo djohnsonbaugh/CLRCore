@@ -10,13 +10,33 @@ namespace CLRCore
     {
         public int ID { get; }
         public DateTime CompletionDate { get; set; }
-        public bool Completed { get { return (CompletionDate == null); } }
+        public bool Completed { get; set; }
         public DateTime CertificateDate { get; set; }
-        public bool CertificateMailed { get { return (CertificateDate == null); } }
+        public bool CertificateMailed { get; set; }
         public Dictionary<int, SectionState> Sections;
         public SectionState CurrentSection { get { return Sections[CurrentSectionID]; } }
         public int CurrentSectionID;
-         
+        public CourseState(int id)
+        {
+            ID = id;
+            Sections = new Dictionary<int, SectionState>();
+        }
+         public void SetCurrentSection(SectionState ss, Course c)
+        {
+            foreach(Section s in c.Sections.Values)
+            {
+                if(s.ID != ss.ID && !Sections.ContainsKey(s.ID))
+                {
+                    Sections.Add(s.ID, new SectionState(s.ID, true, true));
+                }
+                else
+                {
+                    Sections.Add(ss.ID, ss);
+                    CurrentSectionID = ss.ID;
+                    break;
+                }
+            }
+        }
 
     }
     public class CourseStateDisplay

@@ -8,11 +8,12 @@ namespace CLRCore
 {
     public class Address
     {
-        public string Street { get; set; }
-        public string CareOf { get; set; }
+        public string Line1 { get; set; }
+        public string Line2 { get; set; }
+        public string Guardian { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public string Perish { get; set; }
+        public string State { get; set; }
         public string ZipCode { get; set; }
     
     }
