@@ -85,6 +85,7 @@ namespace CLRCore
             {
                 CellTemplate = cell,
                 Name = name,
+                ReadOnly = true,
                 HeaderText = text,
                 DataPropertyName = field,
                 Width = width
@@ -1160,6 +1161,18 @@ namespace CLRCore
                 SelectedMailCode = null;
                 rtbLabelPreview.Text = "";
             }
+        }
+
+        private void cmdMailed_Click(object sender, EventArgs e)
+        {
+            foreach(MailCodeDisplay mcd in MailingList)
+            {
+                if (mcd.Selected)
+                {
+                    mcd.Member.SetAllMailed(DateTime.Today);
+                }
+            }
+            UpdateMailingList();
         }
     }
 }

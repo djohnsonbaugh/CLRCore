@@ -86,5 +86,27 @@ namespace CLRCore
             DoB = new DateTime(1753, 1, 1);
             Address = new Address();
         }
+        public void SetAllMailed(DateTime dt)
+        {
+            foreach (CourseState cs in CompletedCourses.Values)
+            {
+                if (!cs.CertificateMailed)
+                {
+                    cs.CertificateMailed = true;
+                    cs.CertificateDate = dt;
+                }
+            }
+            if(CurrentCourse != null)
+            {
+                if(CurrentCourse.CurrentSection != null)
+                {
+                    if (!CurrentCourse.CurrentSection.Mailed)
+                    {
+                        CurrentCourse.CurrentSection.Mailed = true;
+                        CurrentCourse.CurrentSection.MailedDate = dt;
+                    }
+                }
+            }
+        }
     }
 }
