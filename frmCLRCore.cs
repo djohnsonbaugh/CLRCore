@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace CLRCore
 {
@@ -21,8 +22,12 @@ namespace CLRCore
         private BindingList<Member> Members;
         private BindingList<Course> Courses;
         private BindingList<CourseStateDisplay> CompletedCourses;
+        private BindingList<SectionStateDisplay> CompletedSections;
+        private BindingList<MailCodeDisplay> MailingList;
+        private MailCodeDisplay SelectedMailCode;
         private string CurrentFile;
         private string searchlock = "";
+        private bool updatingscreen = false;
         public frmCLRCore()
         {
             InitializeComponent();
@@ -37,6 +42,8 @@ namespace CLRCore
             InitMembership();
             InitMemberDetailCombos();
             InitCompletedCourses();
+            InitSections();
+            InitMailingList();
             CLRData.MemberSearchComplete += MemberSearchEventHandler;
         }
 
@@ -84,6 +91,19 @@ namespace CLRCore
             };
             return colFileName;
         }
+        private DataGridViewCheckBoxColumn CreateCheckColumn(string name, string text, string field, int width)
+        {
+            DataGridViewCell cell = new DataGridViewCheckBoxCell();
+            DataGridViewCheckBoxColumn colFileName = new DataGridViewCheckBoxColumn()
+            {
+                CellTemplate = cell,
+                Name = name,
+                HeaderText = text,
+                DataPropertyName = field,
+                Width = width
+            };
+            return colFileName;
+        }
         #endregion Init
         #region Command Buttons
         private void cmdNewCourse_Click(object sender, EventArgs e)
@@ -119,6 +139,7 @@ namespace CLRCore
             rbxDescription.Text = SelectedCourse.Description;
             cbxAdultCourse.Checked = SelectedCourse.Adult;
             cbxDeprecated.Checked = SelectedCourse.Deprecated;
+            cbxCertificate.Checked = SelectedCourse.Certificate;
             TempSections = SelectedCourse.CopySections();
             foreach (Course co in Courses) if (co.Name != tbxName.Text) cbxPrereq.Items.Add(co);
             if (SelectedCourse.PrerequisiteID != -1) cbxPrereq.Text = CLRData.GetCourse(SelectedCourse.PrerequisiteID).Name;
@@ -168,6 +189,7 @@ namespace CLRCore
             SelectedCourse.Description = rbxDescription.Text;
             SelectedCourse.Adult = cbxAdultCourse.Checked;
             SelectedCourse.Deprecated = cbxDeprecated.Checked;
+            SelectedCourse.Certificate = cbxCertificate.Checked;
             if (cbxPrereq.SelectedItem != null) SelectedCourse.PrerequisiteID = ((Course)cbxPrereq.SelectedItem).ID;
             else SelectedCourse.PrerequisiteID = -1;
             SelectedCourse.UpdateSections(TempSections);
@@ -553,7 +575,29 @@ namespace CLRCore
             dgvCompletedCourses.Columns.Clear();
             dgvCompletedCourses.Columns.Add(CreateColumn("Name", "Name", "Name", 74));
             dgvCompletedCourses.Columns.Add(CreateColumn("Completed", "Completed", "CompletionDate", 74));
+            dgvCompletedCourses.Columns.Add(CreateCheckColumn("CertMailed", "Cert Mailed", "CertificateMailed", 44));
             dgvCompletedCourses.RowHeadersVisible = false;
+        }
+        private void InitSections()
+        {
+            dgvCompletedSections.AutoGenerateColumns = false;
+            dgvCompletedSections.Columns.Clear();
+            dgvCompletedSections.Columns.Add(CreateColumn("Name", "Name", "Name", 74));
+            dgvCompletedSections.Columns.Add(CreateColumn("Completed", "Completed", "CompletionDate", 74));
+            dgvCompletedSections.Columns.Add(CreateCheckColumn("Mailed", "Mailed", "Mailed", 44));
+            dgvCompletedSections.RowHeadersVisible = false;
+        }
+        private void InitMailingList()
+        {
+            dgvMailingList.AutoGenerateColumns = false;
+            dgvMailingList.Columns.Clear();
+            dgvMailingList.Columns.Add(CreateCheckColumn("Selected", "Selected", "Selected", 30));
+            dgvMailingList.Columns.Add(CreateColumn("ID", "ID", "ID", 40));
+            dgvMailingList.Columns.Add(CreateColumn("First", "First", "FirstName", 74));
+            dgvMailingList.Columns.Add(CreateColumn("Last", "Last", "LastName", 74));
+            dgvMailingList.Columns.Add(CreateColumn("Country", "Country", "Country", 60));
+            dgvMailingList.Columns.Add(CreateColumn("MailCode", "Mail Code", "MailCode", 60));
+            dgvMailingList.RowHeadersVisible = false;
         }
         private void UpdateMembership(BindingList<Member> members)
         {
@@ -629,6 +673,7 @@ namespace CLRCore
 
                 }
             }
+            updatingscreen = true;
             SelectedMember = m;
             tbxFirstName.Text = m.FirstName;
             tbxLastName.Text = m.LastName;
@@ -636,8 +681,8 @@ namespace CLRCore
             tbxSuffix.Text = m.Suffix;
             cbxAdult.Checked = m.Adult;
             cbxProfOfFaith.Checked = m.ProffessionOfFaith;
-            dtpDoB.Value = m.DoB;
-            dtpMembershipDate.Value = m.MembershipDate;
+            dtpDoB.Value = (m.DoB < dtpDoB.MinDate) ? dtpDoB.MinDate : m.DoB;
+            dtpMembershipDate.Value = (m.MembershipDate < dtpMembershipDate.MinDate) ? dtpMembershipDate.MinDate : m.MembershipDate;
             tbxLine1.Text = m.Address.Line1;
             tbxLine2.Text = m.Address.Line2;
             cbxCity.Text = m.Address.City;
@@ -647,12 +692,73 @@ namespace CLRCore
             tbxGuardian.Text = m.Address.Guardian;
             cbxChurch.Text = m.Church;
             cbxDenomination.Text = m.Denominiation;
+            UpdateCurrectCourse(m.CurrentCourse);
             UpdateCompletedCourses(m.ID);
+            updatingscreen = false;
+
+        }
+        private void UpdateCurrectCourse(CourseState cs)
+        {
+            if (cs != null)
+            {
+                Course c = CLRData.Courses[cs.ID];
+                if (cs.CurrentSectionID < 1)
+                {
+                    cs.ResetCurrentCourse();
+                }
+                SectionState ss = cs.CurrentSection;
+
+                lblCurCourseName.Text = c.Name;
+                lblCurSectionName.Text = c.Sections[ss.ID].Name;
+                cmdPrevSection.Enabled = (ss.ID != 1);
+                cmdNextSection.Enabled = (ss.ID != c.Sections.Count);
+                cmdCompleteCourse.Enabled = true;
+                cmdQuitCourse.Enabled = true;
+
+                cbxSectionMailed.Enabled = true;
+                if (cbxSectionMailed.Checked = ss.Mailed)
+                {
+                    lblMailedDate.Text = cs.CurrentSection.MailedDate.ToShortDateString();
+                }
+                else lblMailedDate.Text = "";
+                lblSelectCourse.Visible = false;
+                cbxCourseSelect.Visible = false;
+                cmdStartCourse.Visible = false;
+            }
+            else
+            {
+                lblCurCourseName.Text = "";
+                lblCurSectionName.Text = "";
+                lblMailedDate.Text = "";
+                cbxSectionMailed.Enabled = false;
+                cbxSectionMailed.Checked = false;
+                cmdPrevSection.Enabled = false;
+                cmdNextSection.Enabled = false;
+                cmdCompleteCourse.Enabled = false;
+                cmdQuitCourse.Enabled = false;
+                lblSelectCourse.Visible = true;
+                cbxCourseSelect.Visible = true;
+                cmdStartCourse.Visible = true;
+                cbxCourseSelect.Items.Clear();
+                foreach(Course c in CLRData.Courses.Values)
+                {
+                    if (!SelectedMember.CompletedCourses.ContainsKey(c.ID)) cbxCourseSelect.Items.Add(c);
+                }
+
+
+            }
+            UpdateCompletedSections(SelectedMember.ID);
         }
         private void UpdateCompletedCourses(int id)
         {
             CompletedCourses = CLRData.GetCompletedCourses(id);
             dgvCompletedCourses.DataSource = CompletedCourses;
+
+        }
+        private void UpdateCompletedSections(int id)
+        {
+            CompletedSections = CLRData.GetCompletedSections(id);
+            dgvCompletedSections.DataSource = CompletedSections;
         }
         private void MemberDetails_TextChanged(object sender, EventArgs e)
         {
@@ -661,6 +767,7 @@ namespace CLRCore
 
         private bool AreMemberDetailsSaved()
         {
+            if (updatingscreen) return true;
             if (tbxFirstName.Text != NVL(SelectedMember.FirstName)) return false;
             if (tbxLastName.Text != NVL(SelectedMember.LastName)) return false;
             if (tbxMiddleName.Text != NVL(SelectedMember.MiddleName)) return false;
@@ -671,13 +778,13 @@ namespace CLRCore
             if (dtpMembershipDate.Value != SelectedMember.MembershipDate) return false;
             if (tbxLine1.Text != NVL(SelectedMember.Address.Line1)) return false;
             if (tbxLine2.Text != NVL(SelectedMember.Address.Line2)) return false;
-            if (cbxCity.Text != NVL(SelectedMember.Address.City)) return false;
-            if (cbxState.Text != NVL(SelectedMember.Address.State)) return false;
-            if (cbxCountry.Text != NVL(SelectedMember.Address.Country)) return false;
+            if (cbxCity.Text.ToUpper() != NVL(SelectedMember.Address.City).ToUpper()) return false;
+            if (cbxState.Text.ToUpper() != NVL(SelectedMember.Address.State).ToUpper()) return false;
+            if (cbxCountry.Text.ToUpper() != NVL(SelectedMember.Address.Country).ToUpper()) return false;
             if (tbxZipCode.Text != NVL(SelectedMember.Address.ZipCode)) return false;
             if (tbxGuardian.Text != NVL(SelectedMember.Address.Guardian)) return false;
-            if (cbxChurch.Text != NVL(SelectedMember.Church)) return false;
-            if (cbxDenomination.Text != NVL(SelectedMember.Denominiation)) return false;
+            if (cbxChurch.Text.ToUpper() != NVL(SelectedMember.Church).ToUpper()) return false;
+            if (cbxDenomination.Text.ToUpper() != NVL(SelectedMember.Denominiation).ToUpper()) return false;
             return true;
         }
         private string NVL(string s)
@@ -760,6 +867,20 @@ namespace CLRCore
             Dictionary<string, int> coursemap = new Dictionary<string, int>();
             Dictionary<int, Dictionary<string, int>> secmap = new Dictionary<int, Dictionary<string, int>>();
 
+
+            string data = "";
+            using (StreamReader srfile = new StreamReader(@"C:\TempNas\secmap.json"))
+            {
+                data = srfile.ReadToEnd();
+            }
+            secmap = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<string, int>>>(data);
+            using (StreamReader srfile = new StreamReader(@"C:\TempNas\coursemap.json"))
+            {
+                data = srfile.ReadToEnd();
+            }
+            coursemap = JsonConvert.DeserializeObject<Dictionary<string, int>>(data);
+
+
             if (ofdCSV.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -780,7 +901,7 @@ namespace CLRCore
                             m.Address.Line1 = fields[3].Trim();
                             m.Address.Line2 = fields[4].Trim();
                             m.Address.City = GetInfo(fields[5].Trim(), CLRData.Cities, cimap);
-                            m.Address.State = GetInfo(fields[6].Trim(),CLRData.States,smap);
+                            m.Address.State = GetInfo(fields[6].Trim(), CLRData.States, smap);
                             m.Address.ZipCode = fields[7].Trim();
                             m.Address.Country = GetInfo(fields[8].Trim(), CLRData.Countries, comap);
                             m.DoB = ParseDate(fields[9].Trim());
@@ -792,31 +913,50 @@ namespace CLRCore
                             //m.Denominiation = GetInfo(fields[11].Trim(), CLRData.Denominiations, dmap);
                             m.Denominiation = fields[11].Trim();
                             CourseState cur = new CourseState(GetCourseID(fields[14].Trim(), coursemap, CLRData.GetAbbreviations()));
-                            Course c = CLRData.Courses[cur.ID];
-                            if (!secmap.ContainsKey(cur.ID)) secmap.Add(cur.ID, new Dictionary<string, int>());
-                            SectionState sec = new SectionState(GetSectionID(fields[15].Trim(), secmap[cur.ID], c));
-                            sec.MailedDate = ParseDate(fields[16].Trim());
-                            sec.Mailed = true;
-                            cur.SetCurrentSection(sec, c);
-                            m.CurrentCourse = cur;
-                            for(int i=0; i<10; i++)
+                            Course c = new Course(-1);
+                            if (cur.ID != -1)
                             {
-                                string buf = fields[17 + i*2];
+                                c = CLRData.Courses[cur.ID];
+                                if (!secmap.ContainsKey(cur.ID)) secmap.Add(cur.ID, new Dictionary<string, int>());
+                                SectionState sec = new SectionState(GetSectionID(fields[15].Trim(), secmap[cur.ID], c));
+                                try
+                                {
+                                    using (StreamWriter sfile = new StreamWriter(@"C:\TempNas\secmap.json"))
+                                    {
+                                        sfile.Write(JsonConvert.SerializeObject(secmap));
+                                    }
+                                }
+                                catch { }
+                                sec.MailedDate = ParseDate(fields[16].Trim());
+                                sec.Mailed = true;
+                                cur.SetCurrentSection(sec, c);
+                                m.CurrentCourse = cur;
+                            }
+                            for (int i = 0; i < 10; i++)
+                            {
+                                string buf = fields[17 + i * 2];
                                 DateTime ccdt = ParseDate(fields[18 + i * 2]);
                                 if (ccdt == null) ccdt = m.MembershipDate;
                                 string[] buffs = buf.Split(new char[] { ';', '\'', ',' }, StringSplitOptions.RemoveEmptyEntries);
                                 foreach (string sbuf in buffs)
                                 {
                                     cur = new CourseState(GetCourseID(sbuf.Trim(), coursemap, CLRData.GetAbbreviations()));
-                                    cur.CompletionDate = ccdt;
-                                    cur.CertificateDate = ccdt;
-                                    cur.Completed = true;
-                                    cur.CertificateMailed = true;
-                                    if (m.CurrentCourse.ID == cur.ID)
+                                    if (cur.ID != -1)
                                     {
-                                        m.Comment += string.Format("; Current Course '{0}' was completed previously.", c.Name);
+                                        cur.CompletionDate = ccdt;
+                                        cur.CertificateDate = ccdt;
+                                        cur.Completed = true;
+                                        cur.CertificateMailed = true;
+                                        if (m.CurrentCourse != null)
+                                        {
+                                            if (m.CurrentCourse.ID == cur.ID)
+                                            {
+                                                m.Comment += string.Format("; Current Course '{0}' was completed previously.", c.Name);
+                                            }
+                                            else if (!m.CompletedCourses.ContainsKey(cur.ID)) m.CompletedCourses.Add(cur.ID, cur);
+                                        }
+                                        else if (!m.CompletedCourses.ContainsKey(cur.ID)) m.CompletedCourses.Add(cur.ID, cur);
                                     }
-                                    else m.CompletedCourses.Add(cur.ID, cur);
                                 }
                             }
                         }
@@ -847,7 +987,7 @@ namespace CLRCore
                 if (map.ContainsKey(abbr)) sid = map[abbr];
                 else
                 {
-                    DataImportInfo dii = new CLRCore.DataImportInfo(c.GetSections(), abbr);
+                    DataImportInfo dii = new CLRCore.DataImportInfo(c.GetSections(), abbr, c.Name);
                     string temp = dii.GetInput();
                     c.TryFindSectionByName(temp, out sid);
                     map.Add(abbr, sid);
@@ -855,23 +995,32 @@ namespace CLRCore
             }
             return sid;
         }
-        private int GetCourseID(string abbr, Dictionary<string,int> map, SortedSet<string> set)
+        private int GetCourseID(string abbr, Dictionary<string, int> map, SortedSet<string> set)
         {
             int cid = -1;
-            if (!CLRData.TryFindCourseByAbbr(abbr,out cid))
+            if (!CLRData.TryFindCourseByAbbr(abbr, out cid))
             {
                 if (map.ContainsKey(abbr)) cid = map[abbr];
                 else
                 {
-                    DataImportInfo dii = new CLRCore.DataImportInfo(set, abbr);
+                    DataImportInfo dii = new CLRCore.DataImportInfo(set, abbr, CLRData.Members.Count.ToString());
                     string temp = dii.GetInput();
+                    if (temp == null) return cid;
                     CLRData.TryFindCourseByAbbr(temp, out cid);
                     map.Add(abbr, cid);
+                    try
+                    {
+                        using (StreamWriter file = new StreamWriter(@"C:\TempNas\coursemap.json"))
+                        {
+                            file.Write(JsonConvert.SerializeObject(map));
+                        }
+                    }
+                    catch { }
                 }
             }
             return cid;
         }
-        private string GetInfo(string s, SortedSet<string> set, Dictionary<string,string> map)
+        private string GetInfo(string s, SortedSet<string> set, Dictionary<string, string> map)
         {
             if (s != "" && !set.Contains(s) && !map.ContainsKey(s))
             {
@@ -886,6 +1035,131 @@ namespace CLRCore
             }
             else
                 return s;
+        }
+
+        private void llbLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(tbxLink.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Processing the link failed: " + tbxLink.Text, "Link Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cmdPrevSection_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure that you want to go back a section?", "Previous Section?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.OK)
+            {
+                CourseState cs = SelectedMember.CurrentCourse;
+                cs.PrevSection(CLRData.Courses[cs.ID]);
+                UpdateCurrectCourse(cs);
+            }
+        }
+
+        private void cmdNextSection_Click(object sender, EventArgs e)
+        {
+            CourseState cs = SelectedMember.CurrentCourse;
+            cs.NextSection(CLRData.Courses[cs.ID], DateTime.Today);
+            UpdateCurrectCourse(cs);
+        }
+
+        private void cmdQuitCourse_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure you want to cancel the current course?", "Course Cancelation?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.OK)
+            {
+                SelectedMember.CurrentCourse = null;
+                UpdateCurrectCourse(null);
+            }
+        }
+
+        private void cmdCompleteCourse_Click(object sender, EventArgs e)
+        {
+            CourseState cs = SelectedMember.CurrentCourse;
+            Course c = CLRData.Courses[cs.ID];
+            if (c.Sections.Count != cs.CurrentSectionID)
+            {
+                DialogResult dr = MessageBox.Show("All sections are not complete. Are you sure you want to set complete?", "Course Complete?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dr != DialogResult.OK)
+                {
+                    return;
+                }
+            }
+            cs.SetCourseCompelted(DateTime.Today);
+            SelectedMember.CompleteCurrentCourse();
+            UpdateCurrectCourse(null);
+            UpdateCompletedCourses(SelectedMember.ID);
+        }
+
+        private void cbxSectionMailed_CheckedChanged(object sender, EventArgs e)
+        {
+            CourseState cs = SelectedMember.CurrentCourse;
+            if (cs != null)
+            {
+                if (cbxSectionMailed.Checked != cs.CurrentSection.Mailed)
+                {
+                    if (cbxSectionMailed.Checked)
+                    {
+                        MessageBox.Show("Section has been removed from the mailing list.", "Section Mailed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cs.CurrentSetionMailed(DateTime.Today);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Section has been added to the mailing list.", "Section Mailed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cs.CurrentSection.Mailed = false;
+                    }
+                }
+                UpdateCurrectCourse(cs);
+            }
+        }
+
+        private void cmdStartCourse_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Course c = (Course)cbxCourseSelect.SelectedItem;
+                SelectedMember.StartCourse(c);
+                UpdateCurrectCourse(SelectedMember.CurrentCourse);
+
+            }
+            catch
+            {
+                MessageBox.Show("Valid course must be selected!", "Invalid Course Selected!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void UpdateMailingList()
+        {
+            MailingList = CLRData.GetMailingList();
+            dgvMailingList.DataSource = MailingList;
+        }
+        private void tabPage1_Enter(object sender, EventArgs e)
+        {
+            UpdateMailingList();
+        }
+
+        private void dgvMailingList_SelectionChanged(object sender, EventArgs e)
+        {
+            MailCodeDisplay mcd = (MailCodeDisplay)dgvMailingList.CurrentRow.DataBoundItem;
+            if (SelectedMailCode == null) LoadMailCodeDisplay(mcd);
+            if (SelectedMailCode.ID != mcd.ID) LoadMailCodeDisplay(mcd);
+            gbxMailCodeDisplay.Enabled = true;
+        }
+        private void LoadMailCodeDisplay(MailCodeDisplay mcd)
+        {
+            if(mcd != null)
+            {
+                SelectedMailCode = mcd;
+                rtbLabelPreview.Text = mcd.Label;
+            }
+            else
+            {
+                SelectedMailCode = null;
+                rtbLabelPreview.Text = "";
+            }
         }
     }
 }

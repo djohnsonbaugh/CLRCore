@@ -8,7 +8,7 @@ namespace CLRCore
 {
     public class Member
     {
-        public int ID { get; }
+        public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -26,6 +26,23 @@ namespace CLRCore
                 return (DateTime.Today.Year - DoB.Year) - ((DateTime.Today.Month * 30 + DateTime.Today.Day < DoB.Month * 30 + DoB.Day) ? 1 : 0);
             }
         }
+        public List<int> UnmailedCerts()
+        {
+            List<int> cert = new List<int>();
+            foreach(CourseState cs in CompletedCourses.Values)
+            {
+                if (!cs.CertificateMailed) cert.Add(cs.ID);
+            }
+            return cert;
+        }
+        public string getLabelText(string extrastuff)
+        {
+
+            string lbl = string.Format("{0} {1} [{2}]", FirstName, LastName, ID.ToString());
+            lbl += "\r\n";
+            lbl += Address.getLabelText(extrastuff);
+            return lbl;
+        }
         public string AgeorAdult { get { return (Adult) ? "Adult" : Age.ToString(); } }
         public string Denominiation { get; set; }
         public string Comment { get; set; }
@@ -37,14 +54,30 @@ namespace CLRCore
         {
             if(FirstName != null) if (FirstName.ToLower().Contains(search.ToLower())) return true;
             if (LastName != null) if (LastName.ToLower().Contains(search.ToLower())) return true;
-            if (ID.ToString().Contains(search.ToLower())) return true;
+            if (Address.Country != null) if (Address.Country.ToLower().Contains(search.ToLower())) return true;
+            int id = -1;
+            if (int.TryParse(search, out id))
+            {
+                if (ID == id) return true;
+            }
             return false;
         }
         public void DeleteCourseState(int  id)
         {
-            CompletedCourses.Remove(id);
+            if (CompletedCourses.ContainsKey(id)) CompletedCourses.Remove(id);
         }
+        public void CompleteCurrentCourse ()
+        {
+            if (CompletedCourses.ContainsKey(CurrentCourse.ID)) CompletedCourses.Remove(CurrentCourse.ID);
+            CompletedCourses.Add(CurrentCourse.ID, CurrentCourse);
+            CurrentCourse = null;
 
+        }
+        public void StartCourse(Course c)
+        {
+            CurrentCourse = new CLRCore.CourseState(c.ID);
+            CurrentCourse.Start(false);
+        }
         public Member(int id)
         {
             ID = id;

@@ -8,13 +8,13 @@ namespace CLRCore
 {
     public class CourseState
     {
-        public int ID { get; }
+        public int ID { get; set;}
         public DateTime CompletionDate { get; set; }
         public bool Completed { get; set; }
         public DateTime CertificateDate { get; set; }
         public bool CertificateMailed { get; set; }
         public Dictionary<int, SectionState> Sections;
-        public SectionState CurrentSection { get { return Sections[CurrentSectionID]; } }
+        public SectionState CurrentSection { get { return (CurrentSectionID == 0)? new SectionState(-1) : Sections[CurrentSectionID]; } }
         public int CurrentSectionID;
         public CourseState(int id)
         {
@@ -37,7 +37,51 @@ namespace CLRCore
                 }
             }
         }
-
+        public void Start(bool mailed)
+        {
+            CurrentSectionID = 1;
+            Sections.Add(CurrentSectionID, new SectionState(CurrentSectionID, false, mailed));
+        }
+        public void ResetCurrentCourse()
+        {
+            Sections = new Dictionary<int, CLRCore.SectionState>();
+            Start(true);
+        }
+        public void NextSection(Course c, DateTime dt)
+        {
+            if(CurrentSectionID != c.Sections.Count)
+            {
+                CurrentSection.Completed = true;
+                CurrentSection.CompletionDate = dt;
+                CurrentSectionID++;
+                Sections.Add(CurrentSectionID, new CLRCore.SectionState(CurrentSectionID, false, false));
+            }
+        }
+        public void PrevSection(Course c)
+        {
+            if(CurrentSectionID != 1)
+            {
+                Sections.Remove(CurrentSectionID);
+                CurrentSectionID--;
+                Sections[CurrentSectionID].Mailed = false;
+                Sections[CurrentSectionID].Completed = false;
+            }
+        }
+        public void CurrentSetionMailed(DateTime dt)
+        {
+            Sections[CurrentSectionID].Mailed = true;
+            Sections[CurrentSectionID].MailedDate = dt;
+        }
+        public void SetCourseCompelted(DateTime dt)
+        {
+            Completed = true;
+            CompletionDate = dt;
+        }
+        public void SetCertificateMailed(DateTime dt)
+        {
+            CertificateMailed = true;
+            CertificateDate = dt;
+        }
     }
     public class CourseStateDisplay
     {
@@ -53,6 +97,7 @@ namespace CLRCore
         public int CurrentSectionID { get { return CourseState.CurrentSectionID; } set { CourseState.CurrentSectionID = value; } }
         public CourseState CourseState { get; set; }
         public Course Course { get; set; }
+        public bool Certificate { get { return Course.Certificate; } }
         public CourseStateDisplay(CourseState cs, Course c)
         {
             CourseState = cs;

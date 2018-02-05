@@ -67,6 +67,7 @@
     <Compile Include="frmCLRCore.Designer.cs">
       <DependentUpon>frmCLRCore.cs</DependentUpon>
     </Compile>
+    <Compile Include="MailCodeDisplay.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberSearchEventArgs.cs" />
     <Compile Include="Program.cs" />

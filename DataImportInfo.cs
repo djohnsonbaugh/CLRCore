@@ -13,11 +13,12 @@ namespace CLRCore
     public partial class DataImportInfo : Form
     {
         SortedSet<string> List;
-        public DataImportInfo(SortedSet<string> list, string input)
+        Boolean canceling = false;
+        public DataImportInfo(SortedSet<string> list, string input, string context = "")
         {
             InitializeComponent();
             List = list;
-            lblQuestion.Text = "The input data is '" + input + ".' Correct if neccessary.";
+            lblQuestion.Text = "The input data is '" + input + ".' Correct if neccessary. Context: " + context;
             foreach (string s in List)
             {
                 cbxData.Items.Add(s);
@@ -37,8 +38,16 @@ namespace CLRCore
         }
         public string GetInput()
         {
+            canceling = false;
             this.ShowDialog();
+            if (canceling) return null;
             return cbxData.Text;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            canceling = true;
+            this.Hide();
         }
     }
 }

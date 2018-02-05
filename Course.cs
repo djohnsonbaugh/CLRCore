@@ -21,6 +21,7 @@ namespace CLRCore
         public string Description { get; set; }
         public string Link { get; set; }
         public bool Deprecated { get; set; }
+        public bool Certificate { get; set; }
         public int Section {  get { return Sections.Count; } }
         public Course()
         {
@@ -28,6 +29,7 @@ namespace CLRCore
             PrerequisiteID = -1;
             Name = "";
             MaxAge = 5000;
+            Certificate = true;
         }
         public Course(int id) : this()
         {

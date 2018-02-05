@@ -107,6 +107,38 @@ namespace CLRCore
             }
             return courses;
         }
+        public BindingList<MailCodeDisplay> GetMailingList()
+        {
+            BindingList<MailCodeDisplay> mcd = new BindingList<MailCodeDisplay>();
+            foreach (Member m in Members.Values)
+            {
+                string mc = "";
+                if (m.CurrentCourse != null)
+                {
+                    CourseState cs = m.CurrentCourse;
+                    Course c = Courses[cs.ID];
+                    if (cs.CurrentSectionID > 0)
+                    {
+                        SectionState ss = cs.CurrentSection;
+                        Section s = c.Sections[ss.ID];
+                        if (!m.CurrentCourse.CurrentSection.Mailed)
+                        {
+                            if (mc.Length > 0) mc += ";";
+                            mc += string.Format("{0}/{1}", c.Abbreviation, s.Abbreviation);
+                        }
+                    }
+                }
+                foreach(int cint in m.UnmailedCerts())
+                {
+                    if (mc.Length > 0) mc += ";";
+                    mc += string.Format("CE/{0}", Courses[cint].Abbreviation);
+                }
+
+                if (mc.Length > 0) mcd.Add(new MailCodeDisplay(m, mc));
+            }
+            return mcd;
+        }
+
         public BindingList<CourseStateDisplay> GetCompletedCourses(int id)
         {
             BindingList<CourseStateDisplay> csds = new BindingList<CLRCore.CourseStateDisplay>();
@@ -114,6 +146,23 @@ namespace CLRCore
             foreach(CourseState cs in Members[id].CompletedCourses.Values)
             {
                 csds.Add(new CourseStateDisplay(cs, Courses[cs.ID]));
+            }
+            return csds;
+        }
+        public BindingList<SectionStateDisplay> GetCompletedSections(int id)
+        {
+            BindingList<SectionStateDisplay> csds = new BindingList<SectionStateDisplay>();
+            Member m = Members[id];
+            if (m.CurrentCourse != null)
+            {
+                if (Courses.ContainsKey(m.CurrentCourse.ID))
+                {
+                    Course c = Courses[m.CurrentCourse.ID];
+                    foreach (SectionState ss in m.CurrentCourse.Sections.Values)
+                    {
+                        csds.Add(new SectionStateDisplay(ss, c.Sections[ss.ID]));
+                    }
+                }
             }
             return csds;
         }
