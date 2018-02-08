@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Configuration;
 
 namespace CLRCore
 {
@@ -77,7 +78,7 @@ namespace CLRCore
             string[] searches = search.Trim().Split(new Char[] { ' ', ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (Member m in Members.Values)
             {
-                if (inactive || (DateTime.Today - m.LastActivity).TotalDays < 450)
+                if (inactive || (DateTime.Today - m.LastActivity).TotalDays < int.Parse(ConfigurationSettings.AppSettings["MinDaysInactive"]))
                 {
                     int found = 0;
                     foreach (string s in searches)

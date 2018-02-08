@@ -16,6 +16,16 @@ namespace CLRCore
         public int MinAge {get; set;}
         public int MinInventory {  get { return GetMinimumInventory(); } }
         public int MaxAge { get; set; }
+        public string AgeRange
+        {
+            get
+            {
+                return (MinAge >= 18 || (Adult && MinAge == 0)) ? "Adult" :
+                    (MinAge >= 13 && MaxAge > 18) ? "Teen-Adult" :
+                    (MinAge >= 13) ? "Teen" :
+                    MinAge.ToString() + "-" + MaxAge.ToString();
+            }
+        }
         public bool Adult { get; set; }
         public int PrerequisiteID;
         public string Description { get; set; }

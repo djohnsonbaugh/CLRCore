@@ -91,7 +91,7 @@ namespace CLRCore
         public DateTime CompletionDate { get { return CourseState.CompletionDate; } set { CourseState.CompletionDate = value; } }
         public bool Completed { get { return CourseState.Completed; } }
         public DateTime CertificateDate { get { return CourseState.CertificateDate; } set { CourseState.CertificateDate = value; } }
-        public bool CertificateMailed { get { return CourseState.CertificateMailed; } }
+        public bool CertificateMailed { get { return CourseState.CertificateMailed; }  set { CourseState.CertificateMailed = value; } }
         public Dictionary<int, SectionState> Sections { get { return CourseState.Sections; } set { CourseState.Sections = value; } }
         public SectionState CurrentSection { get { return CourseState.CurrentSection; } }
         public int CurrentSectionID { get { return CourseState.CurrentSectionID; } set { CourseState.CurrentSectionID = value; } }

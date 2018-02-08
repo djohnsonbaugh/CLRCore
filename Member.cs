@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace CLRCore
 {
@@ -26,6 +27,10 @@ namespace CLRCore
                 return (DateTime.Today.Year - DoB.Year) - ((DateTime.Today.Month * 30 + DateTime.Today.Day < DoB.Month * 30 + DoB.Day) ? 1 : 0);
             }
         }
+        public string AgeorAdult
+        {
+            get { return (Age >= int.Parse(ConfigurationSettings.AppSettings["AdultMinAge"]) || Adult) ? "Adult" : (Age >= int.Parse(ConfigurationSettings.AppSettings["TeenMinAge"])) ? "Teen" : Age.ToString(); }
+        }
         public List<int> UnmailedCerts()
         {
             List<int> cert = new List<int>();
@@ -43,7 +48,7 @@ namespace CLRCore
             lbl += Address.getLabelText(extrastuff);
             return lbl;
         }
-        public string AgeorAdult { get { return (Adult) ? "Adult" : Age.ToString(); } }
+        //public string AgeorAdult { get { return (Adult) ? "Adult" : Age.ToString(); } }
         public string Denominiation { get; set; }
         public string Comment { get; set; }
         public Dictionary<int, CourseState> CompletedCourses;
