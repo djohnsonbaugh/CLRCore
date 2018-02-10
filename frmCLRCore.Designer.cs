@@ -52,12 +52,18 @@
             this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.miSave = new System.Windows.Forms.ToolStripMenuItem();
             this.miSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.membersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tcData = new System.Windows.Forms.TabControl();
             this.tpMembers = new System.Windows.Forms.TabPage();
             this.gbxMemberDetails = new System.Windows.Forms.GroupBox();
+            this.lblComments = new System.Windows.Forms.Label();
+            this.rtbComments = new System.Windows.Forms.RichTextBox();
             this.cmdSaveMember = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.cmdStartCourse = new System.Windows.Forms.Button();
@@ -168,12 +174,6 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ofdCSV = new System.Windows.Forms.OpenFileDialog();
-            this.lblComments = new System.Windows.Forms.Label();
-            this.rtbComments = new System.Windows.Forms.RichTextBox();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tcData.SuspendLayout();
             this.tpMembers.SuspendLayout();
@@ -225,23 +225,38 @@
             // miOpen
             // 
             this.miOpen.Name = "miOpen";
-            this.miOpen.Size = new System.Drawing.Size(152, 22);
+            this.miOpen.Size = new System.Drawing.Size(123, 22);
             this.miOpen.Text = "Open...";
             this.miOpen.Click += new System.EventHandler(this.miOpen_Click);
             // 
             // miSave
             // 
             this.miSave.Name = "miSave";
-            this.miSave.Size = new System.Drawing.Size(152, 22);
+            this.miSave.Size = new System.Drawing.Size(123, 22);
             this.miSave.Text = "Save";
             this.miSave.Click += new System.EventHandler(this.miSave_Click);
             // 
             // miSaveAs
             // 
             this.miSaveAs.Name = "miSaveAs";
-            this.miSaveAs.Size = new System.Drawing.Size(152, 22);
+            this.miSaveAs.Size = new System.Drawing.Size(123, 22);
             this.miSaveAs.Text = "Save As...";
             this.miSaveAs.Click += new System.EventHandler(this.miSaveAs_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.preferencesToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
+            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -257,7 +272,7 @@
             this.membersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cSVToolStripMenuItem});
             this.membersToolStripMenuItem.Name = "membersToolStripMenuItem";
-            this.membersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.membersToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.membersToolStripMenuItem.Text = "Members";
             // 
             // cSVToolStripMenuItem
@@ -266,6 +281,21 @@
             this.cSVToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.cSVToolStripMenuItem.Text = "CSV";
             this.cSVToolStripMenuItem.Click += new System.EventHandler(this.cSVToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reportBugToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // reportBugToolStripMenuItem
+            // 
+            this.reportBugToolStripMenuItem.Name = "reportBugToolStripMenuItem";
+            this.reportBugToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.reportBugToolStripMenuItem.Text = "Report Bug";
+            this.reportBugToolStripMenuItem.Click += new System.EventHandler(this.reportBugToolStripMenuItem_Click);
             // 
             // tcData
             // 
@@ -319,12 +349,29 @@
             this.gbxMemberDetails.TabStop = false;
             this.gbxMemberDetails.Text = "Member Details";
             // 
+            // lblComments
+            // 
+            this.lblComments.AutoSize = true;
+            this.lblComments.Location = new System.Drawing.Point(2, 197);
+            this.lblComments.Name = "lblComments";
+            this.lblComments.Size = new System.Drawing.Size(56, 13);
+            this.lblComments.TabIndex = 30;
+            this.lblComments.Text = "Comments";
+            // 
+            // rtbComments
+            // 
+            this.rtbComments.Location = new System.Drawing.Point(6, 213);
+            this.rtbComments.Name = "rtbComments";
+            this.rtbComments.Size = new System.Drawing.Size(510, 86);
+            this.rtbComments.TabIndex = 16;
+            this.rtbComments.Text = "";
+            // 
             // cmdSaveMember
             // 
             this.cmdSaveMember.Location = new System.Drawing.Point(418, 170);
             this.cmdSaveMember.Name = "cmdSaveMember";
             this.cmdSaveMember.Size = new System.Drawing.Size(90, 23);
-            this.cmdSaveMember.TabIndex = 15;
+            this.cmdSaveMember.TabIndex = 17;
             this.cmdSaveMember.Text = "Save Changes";
             this.cmdSaveMember.UseVisualStyleBackColor = true;
             this.cmdSaveMember.Click += new System.EventHandler(this.cmdSaveMember_Click);
@@ -571,7 +618,7 @@
             this.cbxDenomination.Location = new System.Drawing.Point(265, 171);
             this.cbxDenomination.Name = "cbxDenomination";
             this.cbxDenomination.Size = new System.Drawing.Size(136, 21);
-            this.cbxDenomination.TabIndex = 14;
+            this.cbxDenomination.TabIndex = 15;
             this.cbxDenomination.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // cbxAdult
@@ -591,7 +638,7 @@
             this.cbxChurch.Location = new System.Drawing.Point(44, 171);
             this.cbxChurch.Name = "cbxChurch";
             this.cbxChurch.Size = new System.Drawing.Size(136, 21);
-            this.cbxChurch.TabIndex = 13;
+            this.cbxChurch.TabIndex = 14;
             this.cbxChurch.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // label25
@@ -640,7 +687,7 @@
             this.tbxLine2.Location = new System.Drawing.Point(23, 44);
             this.tbxLine2.Name = "tbxLine2";
             this.tbxLine2.Size = new System.Drawing.Size(136, 20);
-            this.tbxLine2.TabIndex = 19;
+            this.tbxLine2.TabIndex = 8;
             // 
             // cbxCountry
             // 
@@ -648,7 +695,7 @@
             this.cbxCountry.Location = new System.Drawing.Point(212, 44);
             this.cbxCountry.Name = "cbxCountry";
             this.cbxCountry.Size = new System.Drawing.Size(136, 21);
-            this.cbxCountry.TabIndex = 10;
+            this.cbxCountry.TabIndex = 11;
             this.cbxCountry.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // cbxState
@@ -657,7 +704,7 @@
             this.cbxState.Location = new System.Drawing.Point(338, 18);
             this.cbxState.Name = "cbxState";
             this.cbxState.Size = new System.Drawing.Size(49, 21);
-            this.cbxState.TabIndex = 9;
+            this.cbxState.TabIndex = 10;
             this.cbxState.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // cbxCity
@@ -666,7 +713,7 @@
             this.cbxCity.Location = new System.Drawing.Point(197, 17);
             this.cbxCity.Name = "cbxCity";
             this.cbxCity.Size = new System.Drawing.Size(106, 21);
-            this.cbxCity.TabIndex = 8;
+            this.cbxCity.TabIndex = 9;
             this.cbxCity.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // tbxGuardian
@@ -674,7 +721,7 @@
             this.tbxGuardian.Location = new System.Drawing.Point(411, 45);
             this.tbxGuardian.Name = "tbxGuardian";
             this.tbxGuardian.Size = new System.Drawing.Size(89, 20);
-            this.tbxGuardian.TabIndex = 12;
+            this.tbxGuardian.TabIndex = 13;
             this.tbxGuardian.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // label23
@@ -691,7 +738,7 @@
             this.tbxZipCode.Location = new System.Drawing.Point(442, 19);
             this.tbxZipCode.Name = "tbxZipCode";
             this.tbxZipCode.Size = new System.Drawing.Size(58, 20);
-            this.tbxZipCode.TabIndex = 11;
+            this.tbxZipCode.TabIndex = 12;
             this.tbxZipCode.TextChanged += new System.EventHandler(this.MemberDetails_TextChanged);
             // 
             // label24
@@ -1500,7 +1547,6 @@
             // 
             // cmdCreateLabels
             // 
-            this.cmdCreateLabels.Enabled = false;
             this.cmdCreateLabels.Location = new System.Drawing.Point(284, 567);
             this.cmdCreateLabels.Name = "cmdCreateLabels";
             this.cmdCreateLabels.Size = new System.Drawing.Size(88, 23);
@@ -1598,53 +1644,6 @@
             this.ofdCSV.DefaultExt = "CSV";
             this.ofdCSV.FileName = "*.CSV";
             this.ofdCSV.Filter = "CSV Files|*.csv|All files|*.*";
-            // 
-            // lblComments
-            // 
-            this.lblComments.AutoSize = true;
-            this.lblComments.Location = new System.Drawing.Point(2, 197);
-            this.lblComments.Name = "lblComments";
-            this.lblComments.Size = new System.Drawing.Size(56, 13);
-            this.lblComments.TabIndex = 30;
-            this.lblComments.Text = "Comments";
-            // 
-            // rtbComments
-            // 
-            this.rtbComments.Location = new System.Drawing.Point(6, 213);
-            this.rtbComments.Name = "rtbComments";
-            this.rtbComments.Size = new System.Drawing.Size(510, 86);
-            this.rtbComments.TabIndex = 29;
-            this.rtbComments.Text = "";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.reportBugToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // reportBugToolStripMenuItem
-            // 
-            this.reportBugToolStripMenuItem.Name = "reportBugToolStripMenuItem";
-            this.reportBugToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.reportBugToolStripMenuItem.Text = "Report Bug";
-            this.reportBugToolStripMenuItem.Click += new System.EventHandler(this.reportBugToolStripMenuItem_Click);
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preferencesToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // preferencesToolStripMenuItem
-            // 
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
-            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
             // 
             // frmCLRCore
             // 

@@ -19,7 +19,7 @@ namespace CLRCore
         {
             string lbl = "";
             List<string> Parts = new List<string>();
-            int maxlen = 30;
+            int maxlen = Properties.Settings.Default.MaxLabelChars;
             if (Guardian.Length > 0)
             {
                 lbl += @"c/o " + Guardian;

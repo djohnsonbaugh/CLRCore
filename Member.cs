@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 
 namespace CLRCore
 {
@@ -29,7 +28,7 @@ namespace CLRCore
         }
         public string AgeorAdult
         {
-            get { return (Age >= int.Parse(ConfigurationSettings.AppSettings["AdultMinAge"]) || Adult) ? "Adult" : (Age >= int.Parse(ConfigurationSettings.AppSettings["TeenMinAge"])) ? "Teen" : Age.ToString(); }
+            get { return (Age >= Properties.Settings.Default.AdultMinAge || Adult) ? "Adult" : (Age >= Properties.Settings.Default.TeenMinAge) ? "Teen" : Age.ToString(); }
         }
         public List<int> UnmailedCerts()
         {

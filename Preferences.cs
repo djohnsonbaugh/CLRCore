@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 using System.Windows.Forms;
 
 namespace CLRCore
@@ -30,23 +29,29 @@ namespace CLRCore
 
         private void Preferences_Shown(object sender, EventArgs e)
         {
-            var cfg = ConfigurationSettings.AppSettings;
-            tbxActiveMemberDays.Text = cfg["MinDaysInactive"];
-            tbxAdultMinAge.Text = cfg["AdultMinAge"];
-            tbxTeenMaxAge.Text = cfg["TeenMaxAge"];
-            tbxTeenMinAge.Text = cfg["TeenMinAge"];
-
+            var cfg = Properties.Settings.Default;
+            tbxActiveMemberDays.Text = cfg.MinDaysInactive.ToString();
+            tbxAdultMinAge.Text = cfg.AdultMinAge.ToString();
+            tbxTeenMaxAge.Text = cfg.TeenMaxAge.ToString();
+            tbxTeenMinAge.Text = cfg.TeenMinAge.ToString();
+            tbxLabelName.Text = cfg.LabelName;
+            tbxFontSize.Text = cfg.FontSize.ToString();
+            tbxMxCharLength.Text = cfg.MaxLabelChars.ToString();
 
         }
 
         private void cmdSave_Click(object sender, EventArgs e)
         {
-            var cfg = ConfigurationSettings.AppSettings;
+            var cfg = Properties.Settings.Default;
             int val;
-            if (int.TryParse(tbxActiveMemberDays.Text, out val)) cfg["MinDaysInactive"] = val.ToString();
-            if (int.TryParse(tbxAdultMinAge.Text, out val)) cfg["AdultMinAge"] = val.ToString();
-            if (int.TryParse(tbxTeenMaxAge.Text, out val)) cfg["TeenMaxAge"] = val.ToString();
-            if (int.TryParse(tbxTeenMinAge.Text, out val)) cfg["TeenMinAge"] = val.ToString();
+            if (int.TryParse(tbxActiveMemberDays.Text, out val)) cfg.MinDaysInactive = val;
+            if (int.TryParse(tbxAdultMinAge.Text, out val)) cfg.AdultMinAge = val;
+            if (int.TryParse(tbxTeenMaxAge.Text, out val)) cfg.TeenMaxAge = val;
+            if (int.TryParse(tbxTeenMinAge.Text, out val)) cfg.TeenMinAge = val;
+            if (int.TryParse(tbxFontSize.Text, out val)) cfg.FontSize = val;
+            if (int.TryParse(tbxMxCharLength.Text, out val)) cfg.MaxLabelChars = val;
+            cfg.LabelName = tbxLabelName.Text;
+            cfg.Save();
         }
 
         private void cmdClose_Click(object sender, EventArgs e)

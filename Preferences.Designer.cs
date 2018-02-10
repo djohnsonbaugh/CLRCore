@@ -38,6 +38,12 @@
             this.cmdSave = new System.Windows.Forms.Button();
             this.tbxActiveMemberDays = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.tbxLabelName = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbxFontSize = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbxMxCharLength = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cmdClose
@@ -124,11 +130,64 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Active Member Cutoff (Days)";
             // 
+            // tbxLabelName
+            // 
+            this.tbxLabelName.Location = new System.Drawing.Point(92, 109);
+            this.tbxLabelName.Name = "tbxLabelName";
+            this.tbxLabelName.Size = new System.Drawing.Size(243, 20);
+            this.tbxLabelName.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 112);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(64, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Label Name";
+            // 
+            // tbxFontSize
+            // 
+            this.tbxFontSize.Location = new System.Drawing.Point(254, 9);
+            this.tbxFontSize.Name = "tbxFontSize";
+            this.tbxFontSize.Size = new System.Drawing.Size(42, 20);
+            this.tbxFontSize.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(174, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(80, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Label Font Size";
+            // 
+            // tbxMxCharLength
+            // 
+            this.tbxMxCharLength.Location = new System.Drawing.Point(254, 30);
+            this.tbxMxCharLength.Name = "tbxMxCharLength";
+            this.tbxMxCharLength.Size = new System.Drawing.Size(42, 20);
+            this.tbxMxCharLength.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(174, 26);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(74, 31);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Label Max Char Length";
+            // 
             // Preferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(380, 266);
+            this.Controls.Add(this.tbxMxCharLength);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.tbxFontSize);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.tbxLabelName);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.tbxActiveMemberDays);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cmdSave);
@@ -160,5 +219,11 @@
         private System.Windows.Forms.Button cmdSave;
         private System.Windows.Forms.TextBox tbxActiveMemberDays;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbxLabelName;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbxFontSize;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tbxMxCharLength;
+        private System.Windows.Forms.Label label7;
     }
 }

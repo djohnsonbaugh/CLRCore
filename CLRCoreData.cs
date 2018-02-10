@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Configuration;
 
 namespace CLRCore
 {
@@ -45,26 +44,12 @@ namespace CLRCore
             Churches = new SortedSet<string>();
             Denominiations = new SortedSet<string>();
         }
-        public void AsyncGetMembership(string search, bool inactive)
+        public void AsyncGetMembership(long searchid, string search, bool inactive)
         {
-            try
-            {
-                if (SearchThread != null)
-                {
-                    lock (searchlock)
-                    {
-                        if (SearchThread.IsAlive) SearchThread.Abort();
-                    }
-                }
-            }
-            catch (ThreadAbortException) { }
             SearchThread = new Thread(delegate ()
             {
                 BindingList<Member> members = GetMembership(search, inactive);
-                lock (searchlock)
-                {
-                    OnMemberSearchComplete(new MemberSearchEventArgs(members));
-                }
+                OnMemberSearchComplete(new MemberSearchEventArgs(searchid, members));
             });
             SearchThread.Start();
         }
@@ -78,7 +63,7 @@ namespace CLRCore
             string[] searches = search.Trim().Split(new Char[] { ' ', ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (Member m in Members.Values)
             {
-                if (inactive || (DateTime.Today - m.LastActivity).TotalDays < int.Parse(ConfigurationSettings.AppSettings["MinDaysInactive"]))
+                if (inactive || (DateTime.Today - m.LastActivity).TotalDays < Properties.Settings.Default.MinDaysInactive)
                 {
                     int found = 0;
                     foreach (string s in searches)
