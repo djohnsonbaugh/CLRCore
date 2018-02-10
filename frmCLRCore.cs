@@ -1260,6 +1260,18 @@ namespace CLRCore
                 int row = 1;
                 int col = 1;
 
+                if (int.TryParse(tbxStartingRow.Text, out row))
+                {
+                    if (row < 1) row = 1;
+                }
+                else row = 1;
+                if (int.TryParse(tbxStartingColumn.Text, out col))
+                {
+                    col = (col - 1) * 2 + 1;
+                    if (col > 5 || col < 1) col = 1;
+                }
+                else col = 1;
+
                 foreach (MailCodeDisplay mcd in MailingList)
                 {
                     if (mcd.Selected)

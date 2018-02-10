@@ -174,6 +174,10 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ofdCSV = new System.Windows.Forms.OpenFileDialog();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.tbxStartingRow = new System.Windows.Forms.TextBox();
+            this.tbxStartingColumn = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tcData.SuspendLayout();
             this.tpMembers.SuspendLayout();
@@ -1496,6 +1500,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.tbxStartingColumn);
+            this.tabPage1.Controls.Add(this.tbxStartingRow);
+            this.tabPage1.Controls.Add(this.label30);
+            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.gbxMailCodeDisplay);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -1645,6 +1653,40 @@
             this.ofdCSV.FileName = "*.CSV";
             this.ofdCSV.Filter = "CSV Files|*.csv|All files|*.*";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(568, 232);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Starting Row";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(568, 257);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(81, 13);
+            this.label30.TabIndex = 4;
+            this.label30.Text = "Starting Column";
+            // 
+            // tbxStartingRow
+            // 
+            this.tbxStartingRow.Location = new System.Drawing.Point(681, 229);
+            this.tbxStartingRow.Name = "tbxStartingRow";
+            this.tbxStartingRow.Size = new System.Drawing.Size(43, 20);
+            this.tbxStartingRow.TabIndex = 5;
+            this.tbxStartingRow.Text = "1";
+            // 
+            // tbxStartingColumn
+            // 
+            this.tbxStartingColumn.Location = new System.Drawing.Point(681, 254);
+            this.tbxStartingColumn.Name = "tbxStartingColumn";
+            this.tbxStartingColumn.Size = new System.Drawing.Size(43, 20);
+            this.tbxStartingColumn.TabIndex = 6;
+            this.tbxStartingColumn.Text = "1";
+            // 
             // frmCLRCore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1685,6 +1727,7 @@
             this.gbxInventory.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCourses)).EndInit();
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.gbxMailCodeDisplay.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMailingList)).EndInit();
@@ -1823,6 +1866,10 @@
         private System.Windows.Forms.ToolStripMenuItem reportBugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
+        private System.Windows.Forms.TextBox tbxStartingColumn;
+        private System.Windows.Forms.TextBox tbxStartingRow;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label6;
     }
 }
 
