@@ -30,6 +30,7 @@ namespace CLRCore
         private string CurrentFile;
         private bool updatingscreen = false;
         private long SearchID = 0;
+        private bool validationlock = false;
         public frmCLRCore()
         {
             InitializeComponent();
@@ -658,6 +659,16 @@ namespace CLRCore
 
         private void cmdAddMember_Click(object sender, EventArgs e)
         {
+            if (SelectedMember != null && !validationlock)
+            {
+                if (SelectedMember.CurrentCourse == null)
+                {
+                    if (MessageBox.Show(string.Format("The selected member '[{2}] {0} {1}' has no course selected. Would you like to set it now?", SelectedMember.FirstName, SelectedMember.LastName, SelectedMember.ID.ToString()), "Warning: Course Not Set!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+            }
             Member m = CLRData.CreateNewMember();
             Members.Add(m);
             SelectMember(m.ID);
@@ -684,10 +695,27 @@ namespace CLRCore
 
         private void dgvMembers_SelectionChanged(object sender, EventArgs e)
         {
+            int returnid = -1;
             Member m = (Member)dgvMembers.CurrentRow.DataBoundItem;
+            if (SelectedMember != null && !validationlock) {
+                if (SelectedMember.ID != m.ID && SelectedMember.CurrentCourse == null)
+                {
+                    if(MessageBox.Show(string.Format("The selected member '[{2}] {0} {1}' has no course selected. Would you like to set it now?", SelectedMember.FirstName, SelectedMember.LastName, SelectedMember.ID.ToString()), "Warning: Course Not Set!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        returnid = SelectedMember.ID;
+                    }
+                }
+            }
             if (SelectedMember == null) LoadMember(m);
             if (SelectedMember.ID != m.ID) LoadMember(m);
             gbxMemberDetails.Enabled = true;
+            if(returnid >= 0)
+            {
+                validationlock = true;
+                SelectMember(returnid);
+                SelectMember(returnid);
+                validationlock = false;
+            }
         }
 
         private void LoadMember(Member m)
@@ -777,6 +805,7 @@ namespace CLRCore
                 cbxCourseSelect.Visible = true;
                 cmdStartCourse.Visible = true;
                 cbxCourseSelect.Items.Clear();
+                cbxCourseSelect.Text = "";
                 foreach(Course c in CLRData.Courses.Values)
                 {
                     if (!SelectedMember.CompletedCourses.ContainsKey(c.ID)) cbxCourseSelect.Items.Add(c);
@@ -854,6 +883,10 @@ namespace CLRCore
             SelectedMember.Church = cbxChurch.Text;
             SelectedMember.Denominiation = cbxDenomination.Text;
             SelectedMember.Comment = rtbComments.Text;
+            if (SelectedMember.CurrentCourse == null)
+            {
+                MessageBox.Show(string.Format("The selected member '[{2}] {0} {1}' has no course selected. Please select a course.", SelectedMember.FirstName, SelectedMember.LastName, SelectedMember.ID.ToString()), "Warning: Course Not Set!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             UpdateMemberDetailsStatus();
         }
         private void cmdSaveMember_Click(object sender, EventArgs e)
@@ -1201,7 +1234,11 @@ namespace CLRCore
 
         private void cmdMailed_Click(object sender, EventArgs e)
         {
-            foreach(MailCodeDisplay mcd in MailingList)
+            OnCMDMailedClicked();
+        }
+        private void OnCMDMailedClicked()
+        {
+            foreach (MailCodeDisplay mcd in MailingList)
             {
                 if (mcd.Selected)
                 {
@@ -1210,7 +1247,6 @@ namespace CLRCore
             }
             UpdateMailingList();
         }
-
         private void frmCLRCore_Load(object sender, EventArgs e)
         {
 
@@ -1292,6 +1328,8 @@ namespace CLRCore
                     }
                 }
                 wrdApp.Visible = true;
+                DialogResult dr = MessageBox.Show("Would you like to complete the selected by setting them as 'Mailed'?", "Set Mailed?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes) OnCMDMailedClicked();
             }
             catch (Exception ex)
             {
